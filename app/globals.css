@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 240 244 248;
+  --surface: 240 244 248;
+  --ink: 31 48 124;
+  --muted: 91 107 134;
+  --accent: 11 95 255;
+  --success: 22 163 74;
+
+  --plate-navy: 31 48 124;
+  --plate-blue: 74 155 213;
+  --plate-sky: 157 200 230;
+  --plate-white: 240 244 248;
+
+  --plate-gradient: linear-gradient(180deg, #4a9bd5 0%, #f0f4f8 100%);
+  --plate-gradient-from: #4a9bd5;
+  --plate-gradient-to: #f0f4f8;
+}
+
+html,
+body {
+  min-height: 100%;
+  background-color: #f0f4f8;
+  background-image: var(--plate-gradient);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  color: rgb(var(--ink));
+  overflow-x: clip;
+}
+
+body {
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.hero {
+  position: relative;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-bg-image {
+  opacity: 1;
+  filter: saturate(0.88);
+  transform: scale(1.02);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--plate-gradient);
+  opacity: 0.76;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-lead {
+  color: rgba(31, 48, 124, 0.84);
+  text-shadow: 0 1px 16px rgba(240, 245, 252, 0.75);
+}
+
+@layer utilities {
+  .gradient-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(31, 48, 124, 0.18) 18%,
+      rgba(74, 155, 213, 0.5) 50%,
+      rgba(31, 48, 124, 0.18) 82%,
+      transparent 100%
+    );
+  }
+
+  .gradient-text {
+    background: linear-gradient(180deg, #1f307c 0%, #4a9bd5 70%, #9dc8e6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+
+  /* CSS-driven entrance animation for above-the-fold content. Runs as
+     soon as the browser parses CSS — no JS dependency, no SSR opacity:0
+     blocking first paint. Tuned per breakpoint:
+       mobile (<640px): 20px rise, 0.6s, 2px blur. Big enough rise + blur
+                        lift so the motion is actually perceptible on a
+                        phone (8px alone reads as "instant pop-in").
+       sm+ (>=640px):  18px rise, 0.7s, 3px blur. Mirrors the previous
+                       framer-motion fadeUp values one-for-one. */
+  @keyframes fade-up-mobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+  @keyframes fade-up-desktop {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+  .fade-up {
+    animation: fade-up-mobile 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  /* Stagger delays — 0.15s apart. Combined with the 0.6s animation duration,
+     each element is ~25% through its fade before the next one starts, giving
+     a clear visible cascade without feeling sluggish. */
+  .fade-up-1 { animation-delay: 0.15s; }
+  .fade-up-2 { animation-delay: 0.30s; }
+  .fade-up-3 { animation-delay: 0.45s; }
+  .fade-up-4 { animation-delay: 0.60s; }
+  .fade-up-5 { animation-delay: 0.75s; }
+  .fade-up-6 { animation-delay: 0.90s; }
+
+  /* Scroll-triggered variant. Starts invisible; animation is gated on a
+     parent .in-view class, which the <InView> client wrapper toggles when
+     the element enters the viewport. Replaces framer-motion whileInView
+     for fade-up entrances on below-the-fold sections — same look, no JS
+     animation runtime in the bundle. */
+  .fade-up-on-view {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .in-view .fade-up-on-view {
+    animation: fade-up-mobile 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .fade-up-on-view-1 { animation-delay: 0.06s; }
+  .fade-up-on-view-2 { animation-delay: 0.12s; }
+  .fade-up-on-view-3 { animation-delay: 0.18s; }
+  .fade-up-on-view-4 { animation-delay: 0.24s; }
+  .fade-up-on-view-5 { animation-delay: 0.30s; }
+  .fade-up-on-view-6 { animation-delay: 0.36s; }
+  .fade-up-on-view-7 { animation-delay: 0.42s; }
+  .fade-up-on-view-8 { animation-delay: 0.48s; }
+
+  @media (min-width: 640px) {
+    .fade-up {
+      animation: fade-up-desktop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .fade-up-1 { animation-delay: 0.12s; }
+    .fade-up-2 { animation-delay: 0.24s; }
+    .fade-up-3 { animation-delay: 0.36s; }
+    .fade-up-4 { animation-delay: 0.48s; }
+    .fade-up-5 { animation-delay: 0.60s; }
+    .fade-up-6 { animation-delay: 0.72s; }
+
+    .fade-up-on-view {
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(3px);
+    }
+    .in-view .fade-up-on-view {
+      animation: fade-up-desktop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .fade-up-on-view-1 { animation-delay: 0.12s; }
+    .fade-up-on-view-2 { animation-delay: 0.24s; }
+    .fade-up-on-view-3 { animation-delay: 0.36s; }
+    .fade-up-on-view-4 { animation-delay: 0.48s; }
+    .fade-up-on-view-5 { animation-delay: 0.60s; }
+    .fade-up-on-view-6 { animation-delay: 0.72s; }
+    .fade-up-on-view-7 { animation-delay: 0.84s; }
+    .fade-up-on-view-8 { animation-delay: 0.96s; }
+  }
+}
+
+/* Safety net: once the page has fully loaded, force fade-up content to its
+   final state. Under normal conditions the CSS animation finishes well
+   before the load event, so this is invisible. On a very slow mobile where
+   the animation timeline ran out while the main thread was blocked, it
+   guarantees the user isn't left looking at invisible content. */
+.loaded .fade-up {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+::selection {
+  background: rgba(74, 155, 213, 0.35);
+  color: rgb(var(--ink));
+}
+
+/* Disable GPU-heavy blob drift animation on mobile — the infinite scale +
+   translate3d + blur-3xl combination is expensive on mobile GPUs and
+   competes with scrolling. Desktop keeps the full effect unchanged. */
+@media (max-width: 639px) {
+  .animate-blob-drift {
+    animation: none !important;
+    filter: blur(40px) !important; /* lighter than blur-3xl (64px) on mobile */
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

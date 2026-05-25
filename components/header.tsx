@@ -1,0 +1,140 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Phone, Menu, X } from "lucide-react";
+import { ButtonLink } from "@/components/ui/button";
+import { cn, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
+
+const navItems = [
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/fees", label: "Fees" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
+];
+
+function Wordmark() {
+  return (
+    <Link
+      href="/"
+      className="group flex items-center gap-2 focus-ring rounded-full"
+    >
+      <span className="grid h-8 w-12 place-items-center rounded-md bg-plate-gradient ring-1 ring-white/40 shadow-soft">
+        <span className="text-[10px] font-extrabold tracking-widest text-plate-navy">
+          DMV
+        </span>
+      </span>
+      <span className="flex flex-col leading-none">
+        <span className="font-display text-lg font-bold tracking-tight text-ink">
+          DMV Express
+        </span>
+        <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
+          RegiSmart LLC
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+export function Header() {
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      id="top"
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        scrolled
+          ? "border-b border-plate-sky/40 bg-plate-white/75 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Wordmark />
+
+        <nav className="hidden lg:flex items-center gap-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              className={cn(
+                "rounded-full px-3 py-2 text-sm transition-colors focus-ring",
+                isActive(item.href)
+                  ? "bg-surface font-semibold text-ink"
+                  : "text-ink/70 hover:text-ink hover:bg-surface",
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <ButtonLink
+            href={PHONE_HREF}
+            variant="gradient"
+            size="md"
+            className="hidden sm:inline-flex"
+          >
+            <Phone className="h-4 w-4" />
+            {PHONE_DISPLAY}
+          </ButtonLink>
+
+          <button
+            onClick={() => setOpen(!open)}
+            className="lg:hidden -mr-2 grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-surface focus-ring"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* mobile menu */}
+      <div
+        className={cn(
+          "lg:hidden overflow-y-auto border-b border-plate-sky/40 bg-plate-white/90 backdrop-blur-md transition-[max-height] duration-300",
+          open ? "max-h-[calc(100dvh-4rem)]" : "max-h-0 overflow-hidden",
+        )}
+      >
+        <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 sm:px-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              className={cn(
+                "rounded-lg px-3 py-3 text-base focus-ring",
+                isActive(item.href)
+                  ? "bg-surface font-semibold text-ink"
+                  : "text-ink hover:bg-surface",
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <ButtonLink href={PHONE_HREF} variant="gradient" size="lg" className="mt-3">
+            <Phone className="h-4 w-4" />
+            Call {PHONE_DISPLAY}
+          </ButtonLink>
+        </div>
+      </div>
+    </header>
+  );
+}
