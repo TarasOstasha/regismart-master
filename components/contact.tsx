@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { MapPin, Phone, Mail, Clock, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MapPin, Phone, Mail, Clock, CheckCircle2, Navigation } from "lucide-react";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import { WaveDivider } from "@/components/ui/wave-divider";
 import {
   ADDRESS_LINE_1,
   ADDRESS_LINE_2,
+  DIRECTIONS_URL,
   EMAIL,
   EMAIL_HREF,
   HOURS,
@@ -175,6 +176,33 @@ export function Contact() {
             </div>
           </div>
         </InView>
+
+        <div className="mt-10 w-full">
+          <div className="mb-3 flex justify-end">
+            <ButtonLink
+              href={DIRECTIONS_URL}
+              variant="gradient"
+              size="sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Navigation className="h-4 w-4" aria-hidden="true" />
+              Get Directions
+            </ButtonLink>
+          </div>
+          <div className="overflow-hidden rounded-2xl bg-bg ring-1 ring-inset ring-plate-sky/40 shadow-soft">
+            <iframe
+              title="DMV Express RegiSmart LLC location map"
+              src="https://www.google.com/maps?q=246+Federal+Road+Suite+D25+Brookfield+CT+06804&output=embed"
+              width="100%"
+              height={420}
+              className="block w-full border-0"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
