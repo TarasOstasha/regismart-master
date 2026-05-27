@@ -193,7 +193,8 @@ export function Contact() {
           <div className="overflow-hidden rounded-2xl bg-bg ring-1 ring-inset ring-plate-sky/40 shadow-soft">
             <iframe
               title="DMV Express RegiSmart LLC location map"
-              src="https://www.google.com/maps?q=246+Federal+Road+Suite+D25+Brookfield+CT+06804&output=embed"
+              // src="https://www.google.com/maps?q=246+Federal+Road+Suite+D25+Brookfield+CT+06804&output=embed"
+              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=place_id:ChIJTyTy93H554kR2rVwWGCnNiM`}
               width="100%"
               height={420}
               className="block w-full border-0"
