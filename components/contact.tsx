@@ -11,8 +11,6 @@ import {
 } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
-import { WaveDivider } from "@/components/ui/wave-divider";
-import { WaveParallaxBackdrop } from "@/components/ui/wave-parallax-backdrop";
 import {
   ADDRESS_LINE_1,
   ADDRESS_LINE_2,
@@ -25,6 +23,9 @@ import {
   PHONE_HREF,
   PHONE_HREF_2,
 } from "@/lib/utils";
+import { WaveDivider } from "@/components/ui/wave-divider";
+
+const WAVE_BG = "/images/wave-bg.webp";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -36,13 +37,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative pt-12 pb-20 sm:pt-16 sm:pb-28">
-      {/* <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
-        <WaveDivider fill="currentColor" />
-      </div> */}
 
-      {/* <div className="absolute inset-x-0 bottom-full leading-none text-surface">
-        <WaveDivider fill="currentColor" className="h-12 sm:h-16" symmetric />
-      </div> */}
 
       <div className="absolute inset-x-0 translate-y-[-99%] leading-none text-surface opacity-90">
         <WaveDivider fill="currentColor" className="h-12 sm:h-16" />
