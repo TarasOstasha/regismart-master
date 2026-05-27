@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Clock, Star, CalendarDays, Users } from "lucide-react";
 import { InView } from "@/components/ui/in-view";
 
@@ -13,12 +13,25 @@ type Stat = {
   label: string;
 };
 
-const stats: Stat[] = [
-  { icon: Clock, value: 30, suffix: " min", label: "Average visit time" },
-  { icon: Star, value: 5.0, decimals: 1, suffix: "★", label: "Google rating" },
-  { icon: Users, value: 900, suffix: "+", label: "Five-star reviews" },
-  { icon: CalendarDays, value: 6, suffix: " days", label: "Open every week" },
-];
+function buildStats(googleRating: number | null, googleReviewTotal: number | null): Stat[] {
+  return [
+    { icon: Clock, value: 30, suffix: " min", label: "Average visit time" },
+    {
+      icon: Star,
+      value: googleRating ?? 5.0,
+      decimals: 1,
+      suffix: "★",
+      label: "Google rating",
+    },
+    {
+      icon: Users,
+      value: googleReviewTotal ?? 0,
+      suffix: "+",
+      label: "Google reviews",
+    },
+    { icon: CalendarDays, value: 6, suffix: " days", label: "Open every week" },
+  ];
+}
 
 function Counter({
   to,
@@ -32,11 +45,10 @@ function Counter({
   active: boolean;
 }) {
   const [val, setVal] = useState(0);
-  const startedRef = useRef(false);
 
   useEffect(() => {
-    if (!active || startedRef.current) return;
-    startedRef.current = true;
+    if (!active) return;
+    setVal(0);
     const start = performance.now();
     let raf = 0;
     const tick = (t: number) => {
@@ -52,8 +64,17 @@ function Counter({
   return <>{val.toFixed(decimals)}</>;
 }
 
-export function Stats() {
+type StatsProps = {
+  googleRating?: number | null;
+  googleReviewTotal?: number | null;
+};
+
+export function Stats({
+  googleRating = null,
+  googleReviewTotal = null,
+}: StatsProps) {
   const [inView, setInView] = useState(false);
+  const stats = buildStats(googleRating, googleReviewTotal);
 
   return (
     <section
@@ -75,7 +96,12 @@ export function Stats() {
               </div>
               <p className="mt-4 font-display text-3xl sm:text-4xl font-bold tracking-tight text-ink tabular-nums">
                 {s.prefix}
-                <Counter to={s.value} decimals={s.decimals ?? 0} active={inView} />
+                <Counter
+                  key={`${s.label}-${s.value}`}
+                  to={s.value}
+                  decimals={s.decimals ?? 0}
+                  active={inView}
+                />
                 {s.suffix}
               </p>
               <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-muted">

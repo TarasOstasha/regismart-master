@@ -1,19 +1,29 @@
 import { Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { InView } from "@/components/ui/in-view";
-import { reviews } from "@/data/reviews";
+import { formatReviewCount, getGoogleReviews } from "@/lib/google-reviews";
 
 function Stars({ n }: { n: number }) {
   return (
     <div className="flex gap-0.5 text-plate-blue">
-      {Array.from({ length: n }).map((_, i) => (
-        <Star key={i} className="h-4 w-4 fill-current" />
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={i < n ? "h-4 w-4 fill-current" : "h-4 w-4 opacity-30"}
+        />
       ))}
     </div>
   );
 }
 
-export function Reviews() {
+export async function Reviews() {
+  const { reviews, rating, total, url } = await getGoogleReviews();
+  if (reviews.length === 0) return null;
+
+  const displayRating = rating?.toFixed(1) ?? "5.0";
+  const reviewLabel =
+    total != null ? `${formatReviewCount(total)} on Google` : "on Google";
+
   return (
     <section id="reviews" className="relative py-20 sm:py-28">
       <div
@@ -27,14 +37,29 @@ export function Reviews() {
               What clients say
             </p>
             <h2 className="fade-up-on-view fade-up-on-view-1 mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink">
-              900+ neighbors trust us with their plates.
+              {total != null
+                ? `${formatReviewCount(total)} neighbors trust us with their plates.`
+                : "Neighbors trust us with their plates."}
             </h2>
           </div>
           <div className="fade-up-on-view fade-up-on-view-2 inline-flex items-center gap-3 rounded-2xl bg-bg px-5 py-3 shadow-soft ring-1 ring-inset ring-plate-sky/50">
-            <Stars n={5} />
+            <Stars n={Math.round(rating ?? 5)} />
             <div>
-              <p className="text-2xl font-bold leading-none text-ink">5.0</p>
-              <p className="text-xs text-muted">Google rating · 900+ reviews</p>
+              <p className="text-2xl font-bold leading-none text-ink">{displayRating}</p>
+              <p className="text-xs text-muted">
+                {url ? (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition hover:text-plate-blue"
+                  >
+                    Google rating · {reviewLabel}
+                  </a>
+                ) : (
+                  <>Google rating · {reviewLabel}</>
+                )}
+              </p>
             </div>
           </div>
         </InView>
@@ -47,7 +72,7 @@ export function Reviews() {
             >
               <Card className="flex h-full flex-col p-5 sm:p-6">
                 <Stars n={r.rating} />
-                <p className="mt-4 text-sm leading-relaxed text-ink/85">
+                <p className="mt-4 text-sm leading-relaxed text-ink/85 line-clamp-6">
                   &ldquo;{r.body}&rdquo;
                 </p>
                 <div className="mt-6 flex items-center gap-3 pt-5 border-t border-plate-sky/30">

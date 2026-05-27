@@ -5,9 +5,17 @@ import { Phone, ArrowRight, Star, Check, Clock } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import { WaveDivider } from "@/components/ui/wave-divider";
+import { formatReviewCount } from "@/lib/google-reviews";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
-export function Hero() {
+type HeroProps = {
+  googleReviewTotal?: number | null;
+};
+
+export function Hero({ googleReviewTotal = null }: HeroProps) {
+  const reviewCount =
+    googleReviewTotal != null ? formatReviewCount(googleReviewTotal) : null;
+
   return (
     <section className="hero relative isolate overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
       <div aria-hidden="true" className="hero-bg">
@@ -60,8 +68,10 @@ export function Hero() {
                 <Star className="h-3.5 w-3.5 fill-current" />
               </span>
               <span>
-                <strong className="font-semibold text-ink">900+</strong>{" "}
-                5-star reviews
+                <strong className="font-semibold text-ink">
+                  {reviewCount ?? "—"}
+                </strong>{" "}
+                Google reviews
               </span>
             </li>
             <li className="flex items-center gap-2 text-ink/80">

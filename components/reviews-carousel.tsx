@@ -4,24 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { InView } from "@/components/ui/in-view";
-import { reviews as fallbackReviews } from "@/data/reviews";
-
-type CarouselReview = {
-  name: string;
-  initials: string;
-  rating: number;
-  body: string;
-  meta: string;
-};
-
-type ApiPayload = {
-  source: "google" | "fallback";
-  rating: number | null;
-  total: number | null;
-  url: string | null;
-  reviews: CarouselReview[];
-  error?: string;
-};
+import type { NormalizedReview, ReviewsPayload } from "@/lib/google-reviews";
 
 const ROTATE_MS = 7000;
 
@@ -38,7 +21,7 @@ function Stars({ n }: { n: number }) {
   );
 }
 
-function ReviewCard({ r }: { r: CarouselReview }) {
+function ReviewCard({ r }: { r: NormalizedReview }) {
   return (
     <Card className="flex h-full flex-col p-6 sm:p-7">
       <Stars n={r.rating} />
@@ -58,9 +41,30 @@ function ReviewCard({ r }: { r: CarouselReview }) {
   );
 }
 
+function ReviewCardSkeleton() {
+  return (
+    <Card className="flex h-full min-h-[220px] flex-col p-6 sm:p-7 animate-pulse">
+      <div className="h-4 w-24 rounded bg-plate-sky/40" />
+      <div className="mt-4 space-y-2">
+        <div className="h-3 w-full rounded bg-plate-sky/30" />
+        <div className="h-3 w-full rounded bg-plate-sky/30" />
+        <div className="h-3 w-4/5 rounded bg-plate-sky/30" />
+      </div>
+      <div className="mt-auto flex items-center gap-3 pt-5 border-t border-plate-sky/30">
+        <div className="h-10 w-10 rounded-full bg-plate-sky/40" />
+        <div className="space-y-2">
+          <div className="h-3 w-28 rounded bg-plate-sky/40" />
+          <div className="h-2 w-20 rounded bg-plate-sky/30" />
+        </div>
+      </div>
+    </Card>
+  );
+}
+
 export function ReviewsCarousel() {
-  const [items, setItems] = useState<CarouselReview[]>(fallbackReviews);
-  const [source, setSource] = useState<"google" | "fallback">("fallback");
+  const [items, setItems] = useState<NormalizedReview[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [googleUrl, setGoogleUrl] = useState<string | null>(null);
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
   const reducedMotionRef = useRef(false);
@@ -77,14 +81,18 @@ export function ReviewsCarousel() {
       try {
         const res = await fetch("/api/google-reviews");
         if (!res.ok) return;
-        const data: ApiPayload = await res.json();
+        const data: ReviewsPayload = await res.json();
         if (cancelled) return;
-        if (data.source === "google" && data.reviews.length > 0) {
+        if (data.reviews.length > 0) {
           setItems(data.reviews);
-          setSource("google");
+          setGoogleUrl(data.url);
+        } else if (process.env.NODE_ENV === "development" && data.error) {
+          console.warn("[ReviewsCarousel] Google reviews:", data.error);
         }
       } catch {
-        // keep fallback
+        // section hidden when empty
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     })();
     return () => {
@@ -92,16 +100,14 @@ export function ReviewsCarousel() {
     };
   }, []);
 
-  // Group reviews into pages of 2
   const pages = useMemo(() => {
-    const out: CarouselReview[][] = [];
+    const out: NormalizedReview[][] = [];
     for (let i = 0; i < items.length; i += 2) {
       out.push(items.slice(i, i + 2));
     }
     return out;
   }, [items]);
 
-  // Auto-rotate
   useEffect(() => {
     if (pages.length <= 1 || paused || reducedMotionRef.current) return;
     const id = window.setInterval(() => {
@@ -110,12 +116,11 @@ export function ReviewsCarousel() {
     return () => window.clearInterval(id);
   }, [pages.length, paused]);
 
-  // Clamp page if items shrink
   useEffect(() => {
     if (page >= pages.length) setPage(0);
   }, [page, pages.length]);
 
-  if (pages.length === 0) return null;
+  if (!loading && pages.length === 0) return null;
 
   const current = pages[page] ?? [];
 
@@ -136,26 +141,37 @@ export function ReviewsCarousel() {
               Real reviews from real neighbors.
             </h2>
           </div>
-          {source === "google" ? (
-            <span className="fade-up-on-view fade-up-on-view-2 text-xs font-medium uppercase tracking-[0.14em] text-muted">
-              Live from Google
-            </span>
+          {googleUrl ? (
+            <a
+              href={googleUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fade-up-on-view fade-up-on-view-2 text-xs font-medium uppercase tracking-[0.14em] text-muted transition hover:text-plate-blue"
+            >
+              View on Google
+            </a>
           ) : null}
         </InView>
 
         <InView className="relative mt-8">
           <div
-            key={page}
+            key={loading ? "loading" : page}
             className="fade-up-on-view grid gap-5 sm:grid-cols-2"
           >
-            {current.map((r, i) => (
-              <div key={`${page}-${i}-${r.name}`}>
-                <ReviewCard r={r} />
-              </div>
-            ))}
+            {loading
+              ? [0, 1].map((i) => (
+                  <div key={i}>
+                    <ReviewCardSkeleton />
+                  </div>
+                ))
+              : current.map((r, i) => (
+                  <div key={`${page}-${i}-${r.name}`}>
+                    <ReviewCard r={r} />
+                  </div>
+                ))}
           </div>
 
-          {pages.length > 1 && (
+          {!loading && pages.length > 1 && (
             <div className="mt-6 flex items-center justify-center gap-4">
               <button
                 type="button"
