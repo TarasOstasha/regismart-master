@@ -44,11 +44,19 @@ const motorcycleDocs = [
 export function HowItWorks() {
   return (
     <section id="how" className="relative pt-12 pb-20 sm:pt-16 sm:pb-28">
-      <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
+      {/* <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
         <WaveDivider fill="currentColor" />
       </div>
       <div className="absolute inset-x-0 -bottom-px translate-y-[99%] rotate-180 text-surface">
         <WaveDivider fill="currentColor" />
+      </div> */}
+            <div className="absolute inset-x-0 translate-y-[-99%] leading-none text-surface opacity-90">
+        <WaveDivider fill="currentColor" className="h-12 sm:h-16" />
+
+        <WaveDivider
+          fill="currentColor"
+          className="-mt-[1px] h-12 rotate-180 sm:h-16"
+        />
       </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <InView className="mx-auto max-w-2xl text-center">

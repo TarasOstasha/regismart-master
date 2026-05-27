@@ -1,10 +1,18 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { MapPin, Phone, Mail, Clock, CheckCircle2, Navigation } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  CheckCircle2,
+  Navigation,
+} from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import { WaveDivider } from "@/components/ui/wave-divider";
+import { WaveParallaxBackdrop } from "@/components/ui/wave-parallax-backdrop";
 import {
   ADDRESS_LINE_1,
   ADDRESS_LINE_2,
@@ -28,18 +36,32 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative pt-12 pb-20 sm:pt-16 sm:pb-28">
-      <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
+      {/* <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
         <WaveDivider fill="currentColor" />
+      </div> */}
+
+      {/* <div className="absolute inset-x-0 bottom-full leading-none text-surface">
+        <WaveDivider fill="currentColor" className="h-12 sm:h-16" symmetric />
+      </div> */}
+
+      <div className="absolute inset-x-0 translate-y-[-99%] leading-none text-surface opacity-90">
+        <WaveDivider fill="currentColor" className="h-12 sm:h-16" />
+
+        <WaveDivider
+          fill="currentColor"
+          className="-mt-[1px] h-12 rotate-180 sm:h-16"
+        />
       </div>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <InView className="max-w-2xl">
+        {/* <InView className="max-w-2xl">
           <p className="fade-up-on-view text-sm font-semibold uppercase tracking-[0.18em] text-plate-blue">
             Visit / Get in touch
           </p>
           <h2 className="fade-up-on-view fade-up-on-view-1 mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink">
             Stop by, give us a call, or send a note.
           </h2>
-        </InView>
+        </InView> */}
 
         <InView className="mt-12 grid gap-10 lg:grid-cols-12">
           {/* left: details */}
@@ -57,7 +79,9 @@ export function Contact() {
                 <p className="text-xs uppercase tracking-wider text-muted">
                   Visit us
                 </p>
-                <p className="mt-0.5 font-semibold text-ink">{ADDRESS_LINE_1}</p>
+                <p className="mt-0.5 font-semibold text-ink">
+                  {ADDRESS_LINE_1}
+                </p>
                 <p className="text-ink">{ADDRESS_LINE_2}</p>
                 <p className="mt-1 text-xs text-accent group-hover:underline">
                   Open in maps →
@@ -164,7 +188,12 @@ export function Contact() {
                     name="message"
                     placeholder="Tell us about the vehicle, the timeline, or what's tripping you up..."
                   />
-                  <Button type="submit" variant="gradient" size="lg" className="w-full sm:w-auto">
+                  <Button
+                    type="submit"
+                    variant="gradient"
+                    size="lg"
+                    className="w-full sm:w-auto"
+                  >
                     Send message
                   </Button>
                   <p className="text-xs text-muted">

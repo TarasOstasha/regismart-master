@@ -6,15 +6,20 @@ import { WaveDivider } from "@/components/ui/wave-divider";
 
 export function FeesTeaser() {
   return (
-    <section
-      id="fees"
-      className="relative pt-12 pb-20 sm:pt-16 sm:pb-28"
-    >
-      <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
+    <section id="fees" className="relative pt-12 pb-20 sm:pt-16 sm:pb-28">
+      {/* <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
         <WaveDivider fill="currentColor" />
       </div>
       <div className="absolute inset-x-0 -bottom-px translate-y-[99%] rotate-180 text-surface">
         <WaveDivider fill="currentColor" />
+      </div> */}
+      <div className="absolute inset-x-0 translate-y-[-99%] leading-none text-surface opacity-90">
+        <WaveDivider fill="currentColor" className="h-12 sm:h-16" />
+
+        <WaveDivider
+          fill="currentColor"
+          className="-mt-[1px] h-12 rotate-180 sm:h-16"
+        />
       </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <InView className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -31,9 +36,9 @@ export function FeesTeaser() {
               State fees on top.
             </h2>
             <p className="fade-up-on-view fade-up-on-view-2 mt-4 text-muted leading-relaxed">
-              You pay a small flat fee for our work, plus the same DMV state
-              fee you&rsquo;d pay anyway. Every line is itemized on the receipt.
-              No surprises at the counter.
+              You pay a small flat fee for our work, plus the same DMV state fee
+              you&rsquo;d pay anyway. Every line is itemized on the receipt. No
+              surprises at the counter.
             </p>
             <a
               href="/contact"

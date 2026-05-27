@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { faqs } from "@/data/faq";
 import { fadeUp, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { WaveDivider } from "./ui/wave-divider";
 
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
@@ -16,6 +17,14 @@ export function FAQ() {
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-12 -z-10 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-plate-sky/15 blur-3xl"
       />
+      <div className="absolute inset-x-0 translate-y-[-99%] leading-none text-surface opacity-90">
+        <WaveDivider fill="currentColor" className="h-12 sm:h-16" />
+
+        <WaveDivider
+          fill="currentColor"
+          className="-mt-[1px] h-12 rotate-180 sm:h-16"
+        />
+      </div>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"

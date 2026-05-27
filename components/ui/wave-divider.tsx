@@ -17,6 +17,7 @@ type Props = {
    */
   syncViewportFill?: boolean;
   className?: string;
+  symmetric?: boolean;
 };
 
 export function WaveDivider({
@@ -25,10 +26,17 @@ export function WaveDivider({
   gradient = false,
   syncViewportFill = false,
   className,
+  symmetric = false,
 }: Props) {
   const gradId = `plate-gradient-${useId().replace(/:/g, "")}`;
   const svgRef = useRef<SVGSVGElement>(null);
   const [syncedFill, setSyncedFill] = useState(fill);
+
+  // Percent-based viewBox so the curve stays mirror-symmetric when stretched (preserveAspectRatio="none").
+  const viewBox = symmetric ? "0 0 100 10" : "0 0 1440 80";
+  const path = symmetric
+    ? "M0,5 Q50,0 100,5 L100,10 L0,10 Z"
+    : "M0,40 C240,80 480,0 720,32 C960,64 1200,16 1440,48 L1440,80 L0,80 Z";
 
   useEffect(() => {
     if (!syncViewportFill) return;
@@ -59,7 +67,7 @@ export function WaveDivider({
     <svg
       ref={svgRef}
       aria-hidden="true"
-      viewBox="0 0 1440 80"
+      viewBox={viewBox}
       preserveAspectRatio="none"
       className={cn(
         "block h-12 w-full sm:h-16",
@@ -75,10 +83,7 @@ export function WaveDivider({
           </linearGradient>
         </defs>
       )}
-      <path
-        d="M0,40 C240,80 480,0 720,32 C960,64 1200,16 1440,48 L1440,80 L0,80 Z"
-        fill={resolvedFill}
-      />
+      <path d={path} fill={resolvedFill} />
     </svg>
   );
 }
