@@ -35,7 +35,7 @@ export function FAQ() {
         </div>
 
         <div className="relative z-[2] mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8">
-          <div className="max-w-3xl">
+          <div className="max-w-lg">
             <nav
               aria-label="Breadcrumb"
               className="fade-up flex items-center gap-1.5 text-xs font-medium text-muted"

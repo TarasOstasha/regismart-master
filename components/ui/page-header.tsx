@@ -30,7 +30,7 @@ export function PageHeader({ title, eyebrow, subtitle }: PageHeaderProps) {
   return (
     <section className="relative overflow-hidden pt-24 pb-10 sm:pt-28 sm:pb-14">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
+        <div className="max-w-xl">
           <nav
             aria-label="Breadcrumb"
             className="fade-up flex items-center gap-1.5 text-xs font-medium text-muted"
