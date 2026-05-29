@@ -1,4 +1,4 @@
-import { Phone, MapPin } from "lucide-react";
+import { Phone, MapPin, Mail } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import {
@@ -50,7 +50,7 @@ export function CTABand({
                 <Phone className="h-4 w-4" />
                 Call {PHONE_DISPLAY}
               </ButtonLink>
-              <ButtonLink
+              {/* <ButtonLink
                 href={`https://maps.google.com/?q=${encodeURIComponent(`${ADDRESS_LINE_1} ${ADDRESS_LINE_2}`)}`}
                 target="_blank"
                 rel="noreferrer"
@@ -60,6 +60,15 @@ export function CTABand({
               >
                 <MapPin className="h-4 w-4" />
                 Get directions
+              </ButtonLink> */}
+              <ButtonLink
+                href="/contact"
+                variant="ghost"
+                size="lg"
+                className="text-bg ring-1 ring-inset ring-white/40 hover:bg-white/10 hover:text-bg"
+              >
+                <Mail className="h-4 w-4" />
+                Message us
               </ButtonLink>
             </div>
           </div>

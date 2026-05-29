@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-labelledby="title desc">
+  <title id="title">DMV Express RegiSmart LLC Logo</title>
+  <desc id="desc">Blue DMV Express logo with minimalist car outline and RegiSmart LLC subtitle.</desc>
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#16368f"/>
+      <stop offset="0.55" stop-color="#1f6fe5"/>
+      <stop offset="1" stop-color="#65c7ff"/>
+    </linearGradient>
+    <linearGradient id="textBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16256f"/>
+      <stop offset="1" stop-color="#0b55c8"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.35  0 0 0 0 1  0 0 0 .55 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- car line art -->
+  <g fill="none" stroke="url(#blue)" stroke-linecap="round" stroke-linejoin="round" filter="url(#softGlow)">
+    <path d="M170 145 C275 82 430 75 550 98 C655 118 717 158 820 166 C855 169 890 180 920 201" stroke-width="10"/>
+    <path d="M235 151 C335 129 520 131 694 154 C764 163 842 169 915 199" stroke-width="6" opacity=".9"/>
+    <path d="M300 135 C365 107 492 109 606 127 C652 134 682 147 707 162" stroke-width="4" opacity=".75"/>
+    <path d="M120 179 C175 168 230 165 292 174" stroke-width="5" opacity=".8"/>
+    <path d="M842 178 C874 174 907 187 930 202 C906 207 880 210 855 205" stroke-width="5" opacity=".8"/>
+  </g>
+
+  <!-- main text -->
+  <text x="500" y="230" text-anchor="middle" font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="88" font-weight="800" letter-spacing="-3" fill="url(#textBlue)">DMV Express</text>
+
+  <!-- subtitle lines + text -->
+  <g fill="none" stroke="#6f7480" stroke-width="3" opacity=".75">
+    <line x1="206" y1="286" x2="335" y2="286"/>
+    <line x1="665" y1="286" x2="794" y2="286"/>
+  </g>
+  <text x="500" y="300" text-anchor="middle" font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="38" font-weight="500" letter-spacing="14" fill="#68707c">REGISMART LLC</text>
+</svg>

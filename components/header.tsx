@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,32 +9,25 @@ import { ButtonLink } from "@/components/ui/button";
 import { cn, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
 const navItems = [
-  { href: "/about", label: "About" },
+  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/fees", label: "Fees" },
+  { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
 function Wordmark() {
   return (
-    <Link
-      href="/"
-      className="group flex items-center gap-2 focus-ring rounded-full"
-    >
-      <span className="grid h-8 w-12 place-items-center rounded-md bg-plate-gradient ring-1 ring-white/40 shadow-soft">
-        <span className="text-[10px] font-extrabold tracking-widest text-plate-navy">
-          DMV
-        </span>
-      </span>
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-lg font-bold tracking-tight text-ink">
-          DMV Express
-        </span>
-        <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
-          RegiSmart LLC
-        </span>
-      </span>
+    <Link href="/" className="group flex shrink-0 items-center focus-ring rounded-lg">
+      <Image
+        src="/images/dmv-express-regismart-logo.svg"
+        alt="DMV Express RegiSmart LLC"
+        width={280}
+        height={72}
+        priority
+        className="h-12 w-auto object-contain sm:h-14"
+      />
     </Link>
   );
 }
