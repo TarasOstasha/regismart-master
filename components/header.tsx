@@ -21,7 +21,7 @@ function Wordmark() {
   return (
     <Link href="/" className="group flex shrink-0 items-center focus-ring rounded-lg">
       <Image
-        src="/images/logo33.png"
+        src="/images/dmv-express-regismart-logo.svg"
         alt="DMV Express RegiSmart LLC"
         width={280}
         height={72}
