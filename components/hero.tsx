@@ -48,7 +48,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
           </p>
 
           <div className="fade-up-on-view fade-up-on-view-5 mt-8 flex flex-wrap items-center gap-3">
-            <ButtonLink href={PHONE_HREF} variant="secondary" size="lg">
+            <ButtonLink href={PHONE_HREF} variant="plate" size="lg">
               <Phone className="h-4 w-4" />
               Call {PHONE_DISPLAY}
             </ButtonLink>

@@ -43,9 +43,9 @@ export function CTABand({
             <div className="fade-up-on-view fade-up-on-view-1 lg:col-span-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
               <ButtonLink
                 href={PHONE_HREF}
-                variant="secondary"
+                variant="plate"
                 size="lg"
-                className="bg-bg text-ink ring-0 hover:bg-bg/90"
+                className="btn-plate-outline--dark"
               >
                 <Phone className="h-4 w-4" />
                 Call {PHONE_DISPLAY}

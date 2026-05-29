@@ -220,6 +220,135 @@ body {
   }
 }
 
+/* ---------------------------------------------------------------- */
+/* Plate-outline button variant                                     */
+/* ---------------------------------------------------------------- */
+/* Applied via Button variant="plate". The button renders an inner   */
+/* .plate-label (with .plate-ct mark + label text) and a sibling     */
+/* .plate-corners span. Four mounting-hole dots are pseudo-elements: */
+/*   - button::before  = top-left                                    */
+/*   - button::after   = top-right (60ms delay)                      */
+/*   - .plate-corners::before = bottom-left (120ms delay)            */
+/*   - .plate-corners::after  = bottom-right (180ms delay)           */
+/* At rest the dots are hidden (opacity:0, scale:0.6). On hover they */
+/* cascade in and the ring tightens to navy.                         */
+.btn-plate-outline {
+  position: relative;
+  isolation: isolate;
+  --plate-dot-bg: #ffffff;
+  --plate-dot-ring: rgb(var(--plate-navy));
+  box-shadow: inset 0 0 0 1px rgba(157, 200, 230, 0.7);
+}
+.btn-plate-outline:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(157, 200, 230, 0.28),
+    rgba(240, 244, 248, 0.6)
+  );
+  box-shadow:
+    inset 0 0 0 1.5px rgb(var(--plate-navy)),
+    0 14px 30px -14px rgba(31, 48, 124, 0.35);
+}
+/* The 4 mounting-hole dots */
+.btn-plate-outline::before,
+.btn-plate-outline::after,
+.btn-plate-outline .plate-corners::before,
+.btn-plate-outline .plate-corners::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--plate-dot-bg);
+  box-shadow: inset 0 0 0 1.5px var(--plate-dot-ring);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 280ms ease,
+    transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+.btn-plate-outline::before {
+  top: 8px;
+  left: 12px;
+}
+.btn-plate-outline::after {
+  top: 8px;
+  right: 12px;
+  transition-delay: 60ms;
+}
+.btn-plate-outline .plate-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.btn-plate-outline .plate-corners::before {
+  bottom: 8px;
+  left: 12px;
+  transition-delay: 120ms;
+}
+.btn-plate-outline .plate-corners::after {
+  bottom: 8px;
+  right: 12px;
+  transition-delay: 180ms;
+}
+.btn-plate-outline:hover::before,
+.btn-plate-outline:hover::after,
+.btn-plate-outline:hover .plate-corners::before,
+.btn-plate-outline:hover .plate-corners::after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* Label + CT mark sit above the dots */
+.btn-plate-outline .plate-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.btn-plate-outline .plate-ct {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--plate-blue));
+  padding-right: 8px;
+  border-right: 1px solid rgba(31, 48, 124, 0.2);
+  transition: color 220ms ease;
+}
+.btn-plate-outline:hover .plate-ct {
+  color: rgb(var(--plate-navy));
+}
+/* Dark surface variant: when the button sits on a navy/gradient bg */
+/* (e.g. CTABand) apply .btn-plate-outline--dark via className.      */
+.btn-plate-outline.btn-plate-outline--dark {
+  --plate-dot-bg: rgb(var(--plate-navy));
+  --plate-dot-ring: rgba(255, 255, 255, 0.7);
+  color: rgb(var(--ink));
+  background-color: rgb(var(--bg));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 12px 26px -12px rgba(0, 0, 0, 0.45);
+}
+.btn-plate-outline.btn-plate-outline--dark:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(240, 244, 248, 1),
+    rgba(157, 200, 230, 0.85)
+  );
+  box-shadow:
+    inset 0 0 0 1.5px rgb(var(--plate-navy)),
+    0 18px 32px -12px rgba(0, 0, 0, 0.5);
+}
+.btn-plate-outline.btn-plate-outline--dark .plate-ct {
+  color: rgb(var(--plate-blue));
+  border-right-color: rgba(31, 48, 124, 0.25);
+}
+
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   * {

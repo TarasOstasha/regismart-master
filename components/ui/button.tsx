@@ -1,8 +1,13 @@
-import { forwardRef, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from "react";
+import {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type AnchorHTMLAttributes,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost" | "gradient";
+type Variant = "primary" | "secondary" | "ghost" | "gradient" | "plate";
 type Size = "sm" | "md" | "lg";
 
 const base =
@@ -16,6 +21,7 @@ const variants: Record<Variant, string> = {
   ghost: "text-ink/80 hover:text-ink hover:bg-surface",
   gradient:
     "text-bg bg-plate-gradient-h shadow-soft hover:shadow-[0_18px_40px_-18px_rgba(31,48,124,0.7)] hover:brightness-[1.05]",
+  plate: "btn-plate-outline bg-bg text-ink",
 };
 
 const sizes: Record<Size, string> = {
@@ -33,13 +39,31 @@ type CommonProps = {
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & CommonProps;
 type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & CommonProps & { href: string };
 
+// Plate variant wraps children with the CT mark + corner dot helper span.
+// The dots themselves are CSS pseudo-elements on the button + .plate-corners.
+function PlateContent({ children }: { children?: ReactNode }) {
+  return (
+    <>
+      <span className="plate-label">
+        <span className="plate-ct" aria-hidden="true">
+          CT
+        </span>
+        {children}
+      </span>
+      <span className="plate-corners" aria-hidden="true" />
+    </>
+  );
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", size = "md", className, ...rest }, ref) => (
+  ({ variant = "primary", size = "md", className, children, ...rest }, ref) => (
     <button
       ref={ref}
       className={cn(base, variants[variant], sizes[size], className)}
       {...rest}
-    />
+    >
+      {variant === "plate" ? <PlateContent>{children}</PlateContent> : children}
+    </button>
   ),
 );
 Button.displayName = "Button";
@@ -49,14 +73,25 @@ export function ButtonLink({
   size = "md",
   className,
   href,
+  children,
   ...rest
 }: LinkProps) {
   const classes = cn(base, variants[variant], sizes[size], className);
+  const content =
+    variant === "plate" ? <PlateContent>{children}</PlateContent> : children;
   // Internal hrefs (start with "/" but not "//") route through Next.js Link
   // so navigation stays client-side. tel:, mailto:, and external URLs stay as <a>.
   const isInternal = href.startsWith("/") && !href.startsWith("//");
   if (isInternal) {
-    return <Link href={href} className={classes} {...rest} />;
+    return (
+      <Link href={href} className={classes} {...rest}>
+        {content}
+      </Link>
+    );
   }
-  return <a href={href} className={classes} {...rest} />;
+  return (
+    <a href={href} className={classes} {...rest}>
+      {content}
+    </a>
+  );
 }

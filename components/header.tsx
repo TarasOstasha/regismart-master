@@ -89,7 +89,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <ButtonLink
             href={PHONE_HREF}
-            variant="gradient"
+            variant="plate"
             size="md"
             className="hidden sm:inline-flex"
           >
@@ -133,7 +133,7 @@ export function Header() {
           ))}
           <ButtonLink
             href={PHONE_HREF}
-            variant="gradient"
+            variant="plate"
             size="lg"
             className="mt-3"
           >
