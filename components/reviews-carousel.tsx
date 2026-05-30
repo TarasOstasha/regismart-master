@@ -61,10 +61,27 @@ function ReviewCardSkeleton() {
   );
 }
 
-export function ReviewsCarousel() {
-  const [items, setItems] = useState<NormalizedReview[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [googleUrl, setGoogleUrl] = useState<string | null>(null);
+type ReviewsCarouselProps = {
+  /** Pre-fetched reviews. When provided, the client fetch is skipped. */
+  initialReviews?: NormalizedReview[];
+  /** Google Maps URL for the "View on Google" link (only used when showHeader). */
+  initialGoogleUrl?: string | null;
+  /** Render the section's eyebrow + heading row. Turn off when embedded
+   *  inside a parent that already supplies its own heading. */
+  showHeader?: boolean;
+  /** Cards per page. 2 on the home teaser, 3 on /about. */
+  perPage?: number;
+};
+
+export function ReviewsCarousel({
+  initialReviews,
+  initialGoogleUrl = null,
+  showHeader = true,
+  perPage = 2,
+}: ReviewsCarouselProps = {}) {
+  const [items, setItems] = useState<NormalizedReview[]>(initialReviews ?? []);
+  const [loading, setLoading] = useState(initialReviews == null);
+  const [googleUrl, setGoogleUrl] = useState<string | null>(initialGoogleUrl);
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
   const reducedMotionRef = useRef(false);
@@ -76,6 +93,7 @@ export function ReviewsCarousel() {
   }, []);
 
   useEffect(() => {
+    if (initialReviews) return;
     let cancelled = false;
     (async () => {
       try {
@@ -98,15 +116,15 @@ export function ReviewsCarousel() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialReviews]);
 
   const pages = useMemo(() => {
     const out: NormalizedReview[][] = [];
-    for (let i = 0; i < items.length; i += 2) {
-      out.push(items.slice(i, i + 2));
+    for (let i = 0; i < items.length; i += perPage) {
+      out.push(items.slice(i, i + perPage));
     }
     return out;
-  }, [items]);
+  }, [items, perPage]);
 
   useEffect(() => {
     if (pages.length <= 1 || paused || reducedMotionRef.current) return;
@@ -123,13 +141,85 @@ export function ReviewsCarousel() {
   if (!loading && pages.length === 0) return null;
 
   const current = pages[page] ?? [];
+  const gridCols =
+    perPage >= 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
+  const skeletonCount = Math.min(perPage, 3);
+
+  const pauseHandlers = {
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+  };
+
+  const carousel = (
+    <InView className={`relative ${showHeader ? "mt-8" : ""}`}>
+      <div
+        key={loading ? "loading" : page}
+        className={`fade-up-on-view grid gap-5 ${gridCols}`}
+      >
+        {loading
+          ? Array.from({ length: skeletonCount }).map((_, i) => (
+              <div key={i}>
+                <ReviewCardSkeleton />
+              </div>
+            ))
+          : current.map((r, i) => (
+              <div key={`${page}-${i}-${r.name}`}>
+                <ReviewCard r={r} />
+              </div>
+            ))}
+      </div>
+
+      {!loading && pages.length > 1 && (
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            aria-label="Previous reviews"
+            onClick={() =>
+              setPage((p) => (p - 1 + pages.length) % pages.length)
+            }
+            className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <div className="flex items-center gap-2" role="tablist">
+            {pages.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === page}
+                aria-label={`Go to review page ${i + 1}`}
+                onClick={() => setPage(i)}
+                className={
+                  i === page
+                    ? "h-2 w-6 rounded-full bg-plate-navy transition-all"
+                    : "h-2 w-2 rounded-full bg-plate-sky/70 transition-all hover:bg-plate-blue/70"
+                }
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Next reviews"
+            onClick={() => setPage((p) => (p + 1) % pages.length)}
+            className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </InView>
+  );
+
+  if (!showHeader) {
+    return <div {...pauseHandlers}>{carousel}</div>;
+  }
 
   return (
     <section
       aria-label="Customer reviews"
       className="relative py-12 sm:py-16"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      {...pauseHandlers}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <InView className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -152,65 +242,7 @@ export function ReviewsCarousel() {
             </a>
           ) : null}
         </InView>
-
-        <InView className="relative mt-8">
-          <div
-            key={loading ? "loading" : page}
-            className="fade-up-on-view grid gap-5 sm:grid-cols-2"
-          >
-            {loading
-              ? [0, 1].map((i) => (
-                  <div key={i}>
-                    <ReviewCardSkeleton />
-                  </div>
-                ))
-              : current.map((r, i) => (
-                  <div key={`${page}-${i}-${r.name}`}>
-                    <ReviewCard r={r} />
-                  </div>
-                ))}
-          </div>
-
-          {!loading && pages.length > 1 && (
-            <div className="mt-6 flex items-center justify-center gap-4">
-              <button
-                type="button"
-                aria-label="Previous reviews"
-                onClick={() =>
-                  setPage((p) => (p - 1 + pages.length) % pages.length)
-                }
-                className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <div className="flex items-center gap-2" role="tablist">
-                {pages.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    role="tab"
-                    aria-selected={i === page}
-                    aria-label={`Go to review pair ${i + 1}`}
-                    onClick={() => setPage(i)}
-                    className={
-                      i === page
-                        ? "h-2 w-6 rounded-full bg-plate-navy transition-all"
-                        : "h-2 w-2 rounded-full bg-plate-sky/70 transition-all hover:bg-plate-blue/70"
-                    }
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                aria-label="Next reviews"
-                onClick={() => setPage((p) => (p + 1) % pages.length)}
-                className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          )}
-        </InView>
+        {carousel}
       </div>
     </section>
   );

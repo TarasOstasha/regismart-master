@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { InView } from "@/components/ui/in-view";
+import { ReviewsCarousel } from "@/components/reviews-carousel";
 import { formatReviewCount, getGoogleReviews } from "@/lib/google-reviews";
 
 function Stars({ n }: { n: number }) {
@@ -64,32 +64,14 @@ export async function Reviews() {
           </div>
         </InView>
 
-        <InView className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {reviews.map((r, i) => (
-            <div
-              key={r.name}
-              className={`fade-up-on-view fade-up-on-view-${Math.min(i + 1, 8)}`}
-            >
-              <Card className="flex h-full flex-col p-5 sm:p-6">
-                <Stars n={r.rating} />
-                <p className="mt-4 text-sm leading-relaxed text-ink/85 line-clamp-6">
-                  &ldquo;{r.body}&rdquo;
-                </p>
-                <div className="mt-6 flex items-center gap-3 pt-5 border-t border-plate-sky/30">
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-plate-gradient-h text-bg text-sm font-semibold">
-                    {r.initials}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-ink truncate">
-                      {r.name}
-                    </p>
-                    <p className="text-xs text-muted truncate">{r.meta}</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          ))}
-        </InView>
+        <div className="mt-12">
+          <ReviewsCarousel
+            initialReviews={reviews}
+            initialGoogleUrl={url}
+            showHeader={false}
+            perPage={3}
+          />
+        </div>
       </div>
     </section>
   );
