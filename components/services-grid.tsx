@@ -22,9 +22,7 @@ export function ServicesGrid({
   showIntro = true,
 }: ServicesGridProps = {}) {
   const visible = typeof limit === "number" ? services.slice(0, limit) : services;
-  // Keep a 3-up grid for the home teaser (3 items) so the row fills evenly.
-  // Full grid renders 4-up so 8 items land as a clean 4×2.
-  const gridCols = visible.length <= 3 ? "lg:grid-cols-3" : "lg:grid-cols-4";
+  const gridCols = "lg:grid-cols-3";
 
   return (
     <section id="services" className="relative py-20 sm:py-28">

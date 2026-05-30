@@ -1,12 +1,13 @@
 import {
   Car,
+  Bike,
+  Truck,
   RefreshCw,
   ArrowLeftRight,
   FileText,
   IdCard,
   Anchor,
-  Truck,
-  Accessibility,
+  Briefcase,
   type LucideIcon,
 } from "lucide-react";
 
@@ -19,8 +20,18 @@ export type Service = {
 export const services: Service[] = [
   {
     icon: Car,
-    title: "Vehicle registration (all types)",
-    blurb: "Cars, motorcycles, RVs. Drive away registered the same day.",
+    title: "Cars",
+    blurb: "Same-day registration for cars and SUVs. Drive away registered.",
+  },
+  {
+    icon: Bike,
+    title: "Motorcycles",
+    blurb: "Get your bike registered and on the road, same day.",
+  },
+  {
+    icon: Truck,
+    title: "Trucks & trailers",
+    blurb: "Pickups, work trucks, and trailers — registered same day.",
   },
   {
     icon: RefreshCw,
@@ -39,8 +50,8 @@ export const services: Service[] = [
   },
   {
     icon: IdCard,
-    title: "Plate transfers & stickers",
-    blurb: "Lost, damaged, or duplicate plates and emission stickers.",
+    title: "Plate transfers",
+    blurb: "Lost, damaged, or duplicate plates.",
   },
   {
     icon: Anchor,
@@ -48,13 +59,8 @@ export const services: Service[] = [
     blurb: "Boats, jet skis, and other vessels. Trailer registrations too.",
   },
   {
-    icon: Truck,
-    title: "Commercial & IRP",
-    blurb: "Apportioned plates, USDOT, and dealer support for fleets.",
-  },
-  {
-    icon: Accessibility,
-    title: "Handicap permits",
-    blurb: "We'll help with the paperwork, temporary or permanent.",
+    icon: Briefcase,
+    title: "Commercial",
+    blurb: "Apportioned plates.",
   },
 ];
