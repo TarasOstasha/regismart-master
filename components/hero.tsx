@@ -56,7 +56,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
               See what to bring
               <ArrowRight className="h-4 w-4" />
             </ButtonLink>
-            <ButtonLink href="/" variant="secondary" size="lg">
+            <ButtonLink href="/book" variant="secondary" size="lg">
               Book Online
               <ArrowRight className="h-4 w-4" />
             </ButtonLink>
