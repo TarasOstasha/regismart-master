@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { ServicesGrid } from "@/components/services-grid";
+import { services } from "@/data/services";
 import { HowItWorks } from "@/components/how-it-works";
 import { CTABand } from "@/components/cta-band";
 import { WaveDivider } from "@/components/ui/wave-divider";
@@ -20,7 +21,7 @@ export default function ServicesPage() {
           className="-mt-[2px] h-12 rotate-180 sm:h-16"
         />
       </div>
-      <ServicesGrid showIntro={false} />
+      <ServicesGrid showIntro={false} limit={services.length} />
       <HowItWorks />
       <CTABand />
     </>

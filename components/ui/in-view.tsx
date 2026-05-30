@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 type InViewProps = {
   children: ReactNode;
   className?: string;
-  /** rootMargin bottom offset — matches the previous framer-motion `margin: "-80px"`. */
+  /** rootMargin bottom offset - matches the previous framer-motion `margin: "-80px"`. */
   margin?: string;
   id?: string;
   /** Optional callback fired once when the element enters the viewport. */
@@ -20,7 +20,7 @@ type InViewProps = {
  * framer-motion runtime to the client.
  *
  * The wrapper itself is the only "use client" island the consuming
- * component needs — the children render as RSC and don't hydrate.
+ * component needs - the children render as RSC and don't hydrate.
  */
 export function InView({
   children,

@@ -69,7 +69,7 @@ type ReviewsCarouselProps = {
   /** Render the section's eyebrow + heading row. Turn off when embedded
    *  inside a parent that already supplies its own heading. */
   showHeader?: boolean;
-  /** Cards per page. 2 on the home teaser, 3 on /about. */
+  /** Visible cards per slide. 2 on the home teaser, 3 on /about. Advances one review at a time. */
   perPage?: number;
 };
 
@@ -118,29 +118,29 @@ export function ReviewsCarousel({
     };
   }, [initialReviews]);
 
-  const pages = useMemo(() => {
-    const out: NormalizedReview[][] = [];
-    for (let i = 0; i < items.length; i += perPage) {
-      out.push(items.slice(i, i + perPage));
-    }
-    return out;
-  }, [items, perPage]);
+  const slideCount = useMemo(() => {
+    if (items.length === 0) return 0;
+    return Math.max(1, items.length - perPage + 1);
+  }, [items.length, perPage]);
+
+  const current = useMemo(
+    () => items.slice(page, page + perPage),
+    [items, page, perPage],
+  );
 
   useEffect(() => {
-    if (pages.length <= 1 || paused || reducedMotionRef.current) return;
+    if (slideCount <= 1 || paused || reducedMotionRef.current) return;
     const id = window.setInterval(() => {
-      setPage((p) => (p + 1) % pages.length);
+      setPage((p) => (p + 1) % slideCount);
     }, ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [pages.length, paused]);
+  }, [slideCount, paused]);
 
   useEffect(() => {
-    if (page >= pages.length) setPage(0);
-  }, [page, pages.length]);
+    if (page >= slideCount) setPage(0);
+  }, [page, slideCount]);
 
-  if (!loading && pages.length === 0) return null;
-
-  const current = pages[page] ?? [];
+  if (!loading && slideCount === 0) return null;
   const gridCols =
     perPage >= 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
   const skeletonCount = Math.min(perPage, 3);
@@ -169,26 +169,26 @@ export function ReviewsCarousel({
             ))}
       </div>
 
-      {!loading && pages.length > 1 && (
+      {!loading && slideCount > 1 && (
         <div className="mt-6 flex items-center justify-center gap-4">
           <button
             type="button"
             aria-label="Previous reviews"
             onClick={() =>
-              setPage((p) => (p - 1 + pages.length) % pages.length)
+              setPage((p) => (p - 1 + slideCount) % slideCount)
             }
             className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <div className="flex items-center gap-2" role="tablist">
-            {pages.map((_, i) => (
+            {Array.from({ length: slideCount }).map((_, i) => (
               <button
                 key={i}
                 type="button"
                 role="tab"
                 aria-selected={i === page}
-                aria-label={`Go to review page ${i + 1}`}
+                aria-label={`Go to review ${i + 1}`}
                 onClick={() => setPage(i)}
                 className={
                   i === page
@@ -201,7 +201,7 @@ export function ReviewsCarousel({
           <button
             type="button"
             aria-label="Next reviews"
-            onClick={() => setPage((p) => (p + 1) % pages.length)}
+            onClick={() => setPage((p) => (p + 1) % slideCount)}
             className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
             <ChevronRight className="h-4 w-4" />

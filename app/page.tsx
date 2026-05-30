@@ -13,7 +13,7 @@ export default async function HomePage() {
       <Hero googleReviewTotal={total} />
       <Stats googleRating={rating} googleReviewTotal={total} />
       <ReviewsCarousel />
-      <ServicesGrid limit={3} showAllLink />
+      <ServicesGrid showAllLink />
       <CTABand />
     </>
   );

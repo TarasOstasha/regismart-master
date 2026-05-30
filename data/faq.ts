@@ -26,6 +26,6 @@ export const faqs: FaqItem[] = [
   },
   {
     q: "What if my vehicle has compliance issues?",
-    a: "Run a free CT DMV compliance check before you visit. The link is in the contact section. If you're flagged, we'll walk you through it.",
+    a: "Run a free CT DMV compliance check before you visit. If you're flagged, we'll walk you through it.",
   },
 ];

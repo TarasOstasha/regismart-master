@@ -6,6 +6,7 @@ import {
   ArrowLeftRight,
   FileText,
   IdCard,
+  RectangleHorizontal,
   Anchor,
   Briefcase,
   type LucideIcon,
@@ -31,7 +32,7 @@ export const services: Service[] = [
   {
     icon: Truck,
     title: "Trucks & trailers",
-    blurb: "Pickups, work trucks, and trailers — registered same day.",
+    blurb: "Pickups, work trucks, and trailers - registered same day.",
   },
   {
     icon: RefreshCw,
@@ -54,8 +55,13 @@ export const services: Service[] = [
     blurb: "Lost, damaged, or duplicate plates.",
   },
   {
+    icon: RectangleHorizontal,
+    title: "Temporary plates",
+    blurb: "Temporary registrations and transit permits for qualifying vehicles.",
+  },
+  {
     icon: Anchor,
-    title: "Boat registration",
+    title: "Boat & Vessel Registration",
     blurb: "Boats, jet skis, and other vessels. Trailer registrations too.",
   },
   {

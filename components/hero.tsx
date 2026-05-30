@@ -69,7 +69,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
               </span>
               <span>
                 <strong className="font-semibold text-ink">
-                  {reviewCount ?? "—"}
+                  {reviewCount ?? "-"}
                 </strong>{" "}
                 Google reviews
               </span>

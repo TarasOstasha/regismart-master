@@ -1,4 +1,9 @@
+import type { ReactNode } from "react";
 import { ClipboardList, Building2, KeyRound, Check } from "lucide-react";
+import {
+  ComplianceCheckLinks,
+  CT_DMV_COMPLIANCE_CHECK,
+} from "@/components/compliance-check-links";
 import { InView } from "@/components/ui/in-view";
 import { WaveDivider } from "@/components/ui/wave-divider";
 
@@ -23,25 +28,74 @@ const steps = [
   },
 ];
 
-const carDocs = [
+type DocItem = string | typeof CT_DMV_COMPLIANCE_CHECK;
+
+const carDocs: DocItem[] = [
   "Bill of sale",
   "Title (if vehicle is 20 years old or newer)",
   "Form H-13B (Application for Registration / Title)",
   "CT Driver's License or ID",
   "CT Insurance card",
   "Emissions or VIN check (if required)",
-  "Paperwork review provided by RegiSmart"
+  CT_DMV_COMPLIANCE_CHECK,
 ];
 
-const motorcycleDocs = [
+const motorcycleDocs: DocItem[] = [
   "Motorcycle title (signed over by seller)",
   "Bill of sale with buyer/seller info, date, price, VIN, and signatures",
   "Previous registration (if no title)",
   "VIN verification (out-of-state or missing VIN)",
   "Valid photo ID of the owner(s)",
   "Completed CT Motorcycle Registration Application",
-  "Paperwork review provided by RegiSmart"
+  CT_DMV_COMPLIANCE_CHECK,
 ];
+
+const boatDocs: DocItem[] = [
+  "Boat title or Manufacturer's Statement of Origin (MSO)",
+  "Bill of sale with buyer/seller info, date, price, HIN, and signatures",
+  "Previous registration (if no title)",
+  "HIN verification (out-of-state or missing HIN)",
+  "Valid photo ID of the owner(s)",
+  "Proof of sales tax payment (if applicable)",
+  "Completed CT vessel registration application",
+  CT_DMV_COMPLIANCE_CHECK,
+];
+
+function docKey(item: DocItem) {
+  return typeof item === "string" ? item : item.label;
+}
+
+function DocChecklistItem({ item }: { item: DocItem }) {
+  const label = docKey(item);
+
+  return (
+    <li className="flex items-start gap-3 text-sm text-ink/85">
+      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-plate-gradient-h text-bg">
+        <Check className="h-3 w-3" />
+      </span>
+      {typeof item === "string" ? (
+        <span>{label}</span>
+      ) : (
+        <ComplianceCheckLinks />
+      )}
+    </li>
+  );
+}
+
+function CalloutChecklistItem({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <li className="flex items-start gap-3 text-bg/95">
+      <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-bg/15">
+        <Check className="h-3.5 w-3.5" />
+      </span>
+      {children}
+    </li>
+  );
+}
 
 export function HowItWorks() {
   return (
@@ -100,7 +154,7 @@ export function HowItWorks() {
         </InView>
 
         {/* Document checklists */}
-        <InView id="docs" className="mt-20 grid gap-6 lg:grid-cols-2">
+        <InView id="docs" className="mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="fade-up-on-view rounded-2xl bg-bg p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-plate-blue">
               For a CT car
@@ -110,12 +164,7 @@ export function HowItWorks() {
             </h3>
             <ul className="mt-5 space-y-3">
               {carDocs.map((d) => (
-                <li key={d} className="flex items-start gap-3 text-sm text-ink/85">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-plate-gradient-h text-bg">
-                    <Check className="h-3 w-3" />
-                  </span>
-                  <span>{d}</span>
-                </li>
+                <DocChecklistItem key={docKey(d)} item={d} />
               ))}
             </ul>
           </div>
@@ -129,19 +178,28 @@ export function HowItWorks() {
             </h3>
             <ul className="mt-5 space-y-3">
               {motorcycleDocs.map((d) => (
-                <li key={d} className="flex items-start gap-3 text-sm text-ink/85">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-plate-gradient-h text-bg">
-                    <Check className="h-3 w-3" />
-                  </span>
-                  <span>{d}</span>
-                </li>
+                <DocChecklistItem key={docKey(d)} item={d} />
+              ))}
+            </ul>
+          </div>
+
+          <div className="fade-up-on-view fade-up-on-view-2 rounded-2xl bg-bg p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft md:col-span-2 lg:col-span-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-plate-blue">
+              For a boat or vessel
+            </p>
+            <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+              Boat &amp; Vessel Registration
+            </h3>
+            <ul className="mt-5 space-y-3">
+              {boatDocs.map((d) => (
+                <DocChecklistItem key={docKey(d)} item={d} />
               ))}
             </ul>
           </div>
         </InView>
 
         {/* Out-of-state callout */}
-        <InView className="mt-10">
+        {/* <InView className="mt-10">
           <div className="fade-up-on-view rounded-2xl bg-plate-gradient-h p-6 sm:p-8 text-bg shadow-plate">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-bg/80">
               Out-of-state vehicle?
@@ -149,26 +207,23 @@ export function HowItWorks() {
             <h3 className="mt-2 font-display text-2xl sm:text-3xl font-semibold">
               Two steps. Then we handle the rest.
             </h3>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              <li className="flex items-start gap-3 text-bg/95">
-                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-bg/15">
-                  <Check className="h-3.5 w-3.5" />
-                </span>
+            <ul className="mt-5 grid gap-3 grid-cols-1 lg:grid-cols-3">
+              <CalloutChecklistItem>
                 <span>Emissions test or VIN verification</span>
-              </li>
-              <li className="flex items-start gap-3 text-bg/95">
-                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-bg/15">
-                  <Check className="h-3.5 w-3.5" />
-                </span>
+              </CalloutChecklistItem>
+              <CalloutChecklistItem>
                 <span>Connecticut auto insurance</span>
-              </li>
+              </CalloutChecklistItem>
+              <CalloutChecklistItem>
+                <ComplianceCheckLinks variant="dark" />
+              </CalloutChecklistItem>
             </ul>
             <p className="mt-5 max-w-xl text-sm text-bg/85">
               Bring proof of those two and your title, and we file the rest with
               CT DMV directly. You leave with Connecticut plates the same day.
             </p>
           </div>
-        </InView>
+        </InView> */}
       </div>
     </section>
   );

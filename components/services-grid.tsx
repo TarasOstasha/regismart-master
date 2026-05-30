@@ -17,11 +17,11 @@ interface ServicesGridProps {
 }
 
 export function ServicesGrid({
-  limit,
+  limit = 6,
   showAllLink = false,
   showIntro = true,
 }: ServicesGridProps = {}) {
-  const visible = typeof limit === "number" ? services.slice(0, limit) : services;
+  const visible = services.slice(0, limit);
   const gridCols = "lg:grid-cols-3";
 
   return (
