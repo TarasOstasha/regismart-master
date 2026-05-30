@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useTransition, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,6 +15,7 @@ import {
 import { Button, ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import { WaveDivider } from "@/components/ui/wave-divider";
+import { sendContact } from "@/app/actions/contact";
 import {
   ADDRESS_LINE_1,
   ADDRESS_LINE_2,
@@ -30,10 +31,29 @@ import {
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (pending) return;
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await sendContact({
+        name: String(fd.get("name") ?? ""),
+        phone: String(fd.get("phone") ?? ""),
+        email: String(fd.get("email") ?? ""),
+        service: String(fd.get("service") ?? ""),
+        message: String(fd.get("message") ?? ""),
+        website: String(fd.get("website") ?? ""),
+      });
+      if (result.ok) {
+        setSubmitted(true);
+      } else {
+        setError(result.error);
+      }
+    });
   };
 
   return (
@@ -206,15 +226,15 @@ export function Contact() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                     <h3 className="font-display text-xl font-semibold text-ink">
                       Send a quick message
                     </h3>
                     <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Your name" name="name" required />
-                      <Field label="Phone" name="phone" type="tel" required />
+                      <Field label="Your name" name="name" autoComplete="name" required />
+                      <Field label="Phone" name="phone" type="tel" autoComplete="tel" required />
                     </div>
-                    <Field label="Email" name="email" type="email" />
+                    <Field label="Email" name="email" type="email" autoComplete="email" />
                     <SelectField
                       label="What do you need?"
                       name="service"
@@ -232,13 +252,34 @@ export function Contact() {
                       name="message"
                       placeholder="Tell us about the vehicle, the timeline, or what's tripping you up..."
                     />
+                    {/* Honeypot: real users won't fill this; bots will. */}
+                    <div aria-hidden="true" className="hidden">
+                      <label>
+                        Website
+                        <input
+                          type="text"
+                          name="website"
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      </label>
+                    </div>
+                    {error && (
+                      <p
+                        role="alert"
+                        className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-inset ring-red-200"
+                      >
+                        {error}
+                      </p>
+                    )}
                     <Button
                       type="submit"
                       variant="gradient"
                       size="lg"
+                      disabled={pending}
                       className="w-full sm:w-auto"
                     >
-                      Send message
+                      {pending ? "Sending…" : "Send message"}
                     </Button>
                     <p className="text-xs text-muted">
                       By submitting you agree to be contacted about your
@@ -288,11 +329,13 @@ function Field({
   name,
   type = "text",
   required,
+  autoComplete,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  autoComplete?: string;
 }) {
   return (
     <label className="block">
@@ -303,6 +346,7 @@ function Field({
         type={type}
         name={name}
         required={required}
+        autoComplete={autoComplete}
         className="mt-1.5 block w-full rounded-xl border-0 bg-surface px-4 py-3 text-ink placeholder:text-muted/60 ring-1 ring-inset ring-plate-sky/50 focus:ring-2 focus:ring-accent focus:outline-none transition"
       />
     </label>
