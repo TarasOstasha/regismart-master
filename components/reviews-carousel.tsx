@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { InView } from "@/components/ui/in-view";
@@ -118,29 +118,34 @@ export function ReviewsCarousel({
     };
   }, [initialReviews]);
 
-  const pages = useMemo(() => {
-    const out: NormalizedReview[][] = [];
-    for (let i = 0; i < items.length; i += perPage) {
-      out.push(items.slice(i, i + perPage));
-    }
-    return out;
-  }, [items, perPage]);
+  // Sliding window: one "position" per review. Each next/prev shifts the
+  // window by ONE card (not a full page), so visitors see a steady drip of
+  // new cards — feels like there's more behind every click.
+  const positions = items.length > perPage ? items.length : 1;
 
   useEffect(() => {
-    if (pages.length <= 1 || paused || reducedMotionRef.current) return;
+    if (positions <= 1 || paused || reducedMotionRef.current) return;
     const id = window.setInterval(() => {
-      setPage((p) => (p + 1) % pages.length);
+      setPage((p) => (p + 1) % positions);
     }, ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [pages.length, paused]);
+  }, [positions, paused]);
 
   useEffect(() => {
-    if (page >= pages.length) setPage(0);
-  }, [page, pages.length]);
+    if (page >= positions) setPage(0);
+  }, [page, positions]);
 
-  if (!loading && pages.length === 0) return null;
+  if (!loading && items.length === 0) return null;
 
-  const current = pages[page] ?? [];
+  const current = (() => {
+    if (items.length === 0) return [];
+    if (items.length <= perPage) return items;
+    const out: NormalizedReview[] = [];
+    for (let i = 0; i < perPage; i++) {
+      out.push(items[(page + i) % items.length]);
+    }
+    return out;
+  })();
   const gridCols =
     perPage >= 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
   const skeletonCount = Math.min(perPage, 3);
@@ -169,26 +174,26 @@ export function ReviewsCarousel({
             ))}
       </div>
 
-      {!loading && pages.length > 1 && (
+      {!loading && positions > 1 && (
         <div className="mt-6 flex items-center justify-center gap-4">
           <button
             type="button"
-            aria-label="Previous reviews"
+            aria-label="Previous review"
             onClick={() =>
-              setPage((p) => (p - 1 + pages.length) % pages.length)
+              setPage((p) => (p - 1 + positions) % positions)
             }
             className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <div className="flex items-center gap-2" role="tablist">
-            {pages.map((_, i) => (
+            {Array.from({ length: positions }).map((_, i) => (
               <button
                 key={i}
                 type="button"
                 role="tab"
                 aria-selected={i === page}
-                aria-label={`Go to review page ${i + 1}`}
+                aria-label={`Show review ${i + 1}`}
                 onClick={() => setPage(i)}
                 className={
                   i === page
@@ -200,8 +205,8 @@ export function ReviewsCarousel({
           </div>
           <button
             type="button"
-            aria-label="Next reviews"
-            onClick={() => setPage((p) => (p + 1) % pages.length)}
+            aria-label="Next review"
+            onClick={() => setPage((p) => (p + 1) % positions)}
             className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
             <ChevronRight className="h-4 w-4" />
