@@ -1,4 +1,7 @@
+"use client";
+
 import { Phone, MapPin, Mail } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import {
@@ -17,6 +20,14 @@ export function CTABand({
   title = "Ready to skip the line?",
   subtitle = "Walk in or call ahead. Either way, your paperwork is moving in minutes.",
 }: CTABandProps) {
+  const pathname = usePathname();
+  const isServicesPage =
+    pathname === "/services" || pathname.startsWith("/services/");
+
+  if (isServicesPage) {
+    return null;
+  }
+
   return (
     <section className="relative py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

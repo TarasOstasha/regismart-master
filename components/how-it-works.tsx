@@ -30,6 +30,7 @@ const carDocs = [
   "CT Driver's License or ID",
   "CT Insurance card",
   "Emissions or VIN check (if required)",
+  "Paperwork review provided by RegiSmart"
 ];
 
 const motorcycleDocs = [
@@ -39,6 +40,7 @@ const motorcycleDocs = [
   "VIN verification (out-of-state or missing VIN)",
   "Valid photo ID of the owner(s)",
   "Completed CT Motorcycle Registration Application",
+  "Paperwork review provided by RegiSmart"
 ];
 
 export function HowItWorks() {
