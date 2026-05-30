@@ -36,5 +36,8 @@ next-env.d.ts
 # Claude / Cursor AI
 .claude/
 
+# local design mockups (not part of the deployed site)
+mockups/
+
 # optional
 coverage/
