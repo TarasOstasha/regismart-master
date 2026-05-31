@@ -4,6 +4,16 @@ import { HowItWorks } from "@/components/how-it-works";
 import { CTABand } from "@/components/cta-band";
 import { WaveDivider } from "@/components/ui/wave-divider";
 
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Services",
+  description:
+    "Every CT vehicle registration service in one place — renewals, titles, out-of-state transfers, and dealer/commercial (IRP). Walk-ins welcome in Brookfield, CT.",
+  path: "/services",
+});
+
 export default function ServicesPage() {
   return (
     <>

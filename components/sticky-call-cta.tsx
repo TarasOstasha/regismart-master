@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Phone, MapPin } from "lucide-react";
-import { cn, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
+import { cn, DIRECTIONS_URL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
 export function StickyCallCTA() {
   const [show, setShow] = useState(false);
@@ -30,7 +30,7 @@ export function StickyCallCTA() {
           Call {PHONE_DISPLAY}
         </a>
         <a
-          href="https://maps.google.com/?q=40+Fairfield+Ave+Bridgeport+CT"
+          href={DIRECTIONS_URL}
           target="_blank"
           rel="noreferrer"
           className="grid h-11 w-11 place-items-center rounded-full bg-bg/10 text-bg"

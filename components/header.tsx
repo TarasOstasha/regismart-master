@@ -49,6 +49,22 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock background scroll while the mobile menu is open. The viewport scrolls
+  // at the <html> level (Lenis is off on touch), so body overflow alone doesn't
+  // hold it — lock documentElement too, and restore prior inline values.
+  useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const prevHtml = html.style.overflow;
+    const prevBody = document.body.style.overflow;
+    html.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    return () => {
+      html.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
+    };
+  }, [open]);
+
   return (
     <header
       id="top"
@@ -93,7 +109,7 @@ export function Header() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden -mr-2 grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-surface focus-ring"
+            className="lg:hidden -mr-2 grid h-11 w-11 place-items-center rounded-full text-ink hover:bg-surface focus-ring"
             aria-label="Toggle menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
