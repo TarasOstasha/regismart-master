@@ -95,7 +95,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[3]"
       >
         <div className="gradient-divider mx-auto mb-4 max-w-5xl opacity-70" />
-        <WaveDivider syncViewportFill className="h-10 sm:h-14" />
+        {/* <WaveDivider syncViewportFill className="h-10 sm:h-14" /> */}
       </div>
     </section>
   );

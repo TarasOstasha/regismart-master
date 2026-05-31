@@ -153,7 +153,7 @@ export function ReviewsCarousel({
   const carousel = (
     <InView className={`relative ${showHeader ? "mt-8" : ""}`}>
       <div
-        key={loading ? "loading" : page}
+        // key={loading ? "loading" : page}
         className={`fade-up-on-view grid gap-5 ${gridCols}`}
       >
         {loading
