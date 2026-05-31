@@ -144,15 +144,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <ButtonLink
-            href={PHONE_HREF}
-            variant="plate"
-            size="lg"
-            className="mt-3"
-          >
-            <Phone className="h-4 w-4" />
-            Call {PHONE_DISPLAY}
-          </ButtonLink>
         </div>
       </div>
     </header>

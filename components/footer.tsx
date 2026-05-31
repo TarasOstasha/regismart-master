@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Facebook } from "lucide-react";
 import {
@@ -28,24 +29,21 @@ const cols = [
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-plate-sky/40 pt-16 pb-12 sm:pb-16">
+    <footer className="relative border-t border-plate-sky/40 pt-16 pb-28 lg:pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="grid h-9 w-14 place-items-center rounded-md bg-plate-gradient ring-1 ring-white/40 shadow-soft">
-                <span className="text-[10px] font-extrabold tracking-widest text-plate-navy">
-                  DMV
-                </span>
-              </span>
-              <span className="flex flex-col leading-none">
-                <span className="font-display text-xl font-bold tracking-tight text-ink">
-                  DMV Express
-                </span>
-                <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
-                  RegiSmart LLC
-                </span>
-              </span>
+            <Link
+              href="/"
+              className="inline-flex items-center focus-ring rounded-lg"
+            >
+              <Image
+                src="/images/dmv_express_blue_logo-blue.svg"
+                alt="DMV Express by RegiSmart LLC"
+                width={280}
+                height={72}
+                className="h-12 w-auto object-contain"
+              />
             </Link>
             <p className="mt-4 max-w-md text-sm text-muted leading-relaxed">
               A Connecticut-authorized vehicle registration office. We file

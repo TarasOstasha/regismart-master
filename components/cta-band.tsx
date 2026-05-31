@@ -55,7 +55,7 @@ export function CTABand({
               </p>
             </div>
 
-            <div className="fade-up-on-view fade-up-on-view-1 lg:col-span-5 flex flex-row flex-nowrap items-center gap-2 sm:gap-3 lg:justify-end">
+            <div className="fade-up-on-view fade-up-on-view-1 lg:col-span-5 flex flex-col gap-2 sm:flex-row sm:flex-nowrap sm:items-center sm:gap-3 lg:justify-end">
               <ButtonLink
                 href={PHONE_HREF}
                 variant="plate"
