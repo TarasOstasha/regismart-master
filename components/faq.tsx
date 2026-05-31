@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight, Minus, Plus } from "lucide-react";
+import { ComplianceCheckLinks } from "@/components/compliance-check-links";
 import { faqs } from "@/data/faq";
 import { fadeUp, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -141,9 +142,22 @@ export function FAQ() {
                         className="overflow-hidden"
                       >
                         <div className="mb-6 rounded-2xl bg-surface px-5 py-4 ring-1 ring-inset ring-plate-sky/35 sm:px-6 sm:py-5">
-                          <p className="pr-4 text-muted leading-relaxed sm:pr-8">
-                            {item.a}
-                          </p>
+                          {item.q === "What if my vehicle has compliance issues?" ? (
+                            <div className="pr-4 text-muted leading-relaxed sm:pr-8">
+                              <p>
+                                Run a free CT DMV compliance check before you
+                                visit. If you&apos;re flagged, we&apos;ll walk
+                                you through it.
+                              </p>
+                              <div className="mt-3 text-sm text-ink/85">
+                                <ComplianceCheckLinks />
+                              </div>
+                            </div>
+                          ) : (
+                            <p className="pr-4 text-muted leading-relaxed sm:pr-8">
+                              {item.a}
+                            </p>
+                          )}
                         </div>
                       </motion.div>
                     )}

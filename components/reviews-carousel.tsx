@@ -69,7 +69,7 @@ type ReviewsCarouselProps = {
   /** Render the section's eyebrow + heading row. Turn off when embedded
    *  inside a parent that already supplies its own heading. */
   showHeader?: boolean;
-  /** Cards per page. 2 on the home teaser, 3 on /about. */
+  /** Visible cards per slide. 2 on the home teaser, 3 on /about. Advances one review at a time. */
   perPage?: number;
 };
 
@@ -158,7 +158,7 @@ export function ReviewsCarousel({
   const carousel = (
     <InView className={`relative ${showHeader ? "mt-8" : ""}`}>
       <div
-        key={loading ? "loading" : page}
+        // key={loading ? "loading" : page}
         className={`fade-up-on-view grid gap-5 ${gridCols}`}
       >
         {loading

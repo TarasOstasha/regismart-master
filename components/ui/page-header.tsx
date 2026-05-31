@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
   title: string;
   eyebrow?: string;
+  eyebrowClassName?: string;
   subtitle?: string;
 }
 
@@ -22,7 +24,12 @@ function titleCaseFromSegment(segment: string) {
     .join(" ");
 }
 
-export function PageHeader({ title, eyebrow, subtitle }: PageHeaderProps) {
+export function PageHeader({
+  title,
+  eyebrow,
+  eyebrowClassName,
+  subtitle,
+}: PageHeaderProps) {
   const pathname = usePathname();
   const segment = pathname.split("/").filter(Boolean)[0] ?? "";
   const currentLabel = segment ? titleCaseFromSegment(segment) : title;
@@ -46,7 +53,12 @@ export function PageHeader({ title, eyebrow, subtitle }: PageHeaderProps) {
           </nav>
 
           {eyebrow && (
-            <p className="fade-up fade-up-1 mt-6 text-sm font-semibold uppercase tracking-[0.18em] text-plate-blue">
+            <p
+              className={cn(
+                "fade-up fade-up-1 mt-6 text-sm font-semibold uppercase tracking-[0.18em]",
+                eyebrowClassName ?? "text-plate-blue",
+              )}
+            >
               {eyebrow}
             </p>
           )}

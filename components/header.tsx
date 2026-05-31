@@ -17,16 +17,19 @@ const navItems = [
   { href: "/contact", label: "Contact" },
 ];
 
-function Wordmark() {
+const LOGO_WHITE = "/images/dmv-express-regismart-logo-white.svg";
+const LOGO_BLUE = "/images/dmv_express_blue_logo-blue.svg";
+
+function Wordmark({ scrolled }: { scrolled: boolean }) {
   return (
     <Link href="/" className="group flex shrink-0 items-center focus-ring rounded-lg">
       <Image
-        src="/images/dmv-express-regismart-logo.svg"
+        src={scrolled ? LOGO_BLUE : LOGO_WHITE}
         alt="DMV Express RegiSmart LLC"
         width={280}
         height={72}
         priority
-        className="h-12 w-auto object-contain sm:h-14"
+        className="h-12 w-auto object-contain transition-opacity duration-300 sm:h-14"
       />
     </Link>
   );
@@ -60,7 +63,7 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Wordmark />
+        <Wordmark scrolled={scrolled} />
 
         <nav className="hidden lg:flex items-center gap-2">
           {navItems.map((item) => (

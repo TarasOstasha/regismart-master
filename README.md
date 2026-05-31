@@ -1,6 +1,6 @@
 # RegiSmart
 
-Single-page marketing site for RegiSmart — Connecticut DMV / vehicle-registration services.
+Single-page marketing site for RegiSmart - Connecticut DMV / vehicle-registration services.
 
 ## Stack
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind 3 · framer-motion · Lenis

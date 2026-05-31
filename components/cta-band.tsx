@@ -1,6 +1,16 @@
-import { Phone, MapPin, Mail } from "lucide-react";
+"use client";
+
+import { Phone, Mail, Calendar } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
+import {
+  BOOKING_HREF,
+  BOOKING_SECTION_ID,
+  CONTACT_MESSAGE_FORM_ID,
+  CONTACT_MESSAGE_HREF,
+  scrollToAnchor,
+} from "@/lib/scroll-to-anchor";
 import {
   ADDRESS_LINE_1,
   ADDRESS_LINE_2,
@@ -17,6 +27,11 @@ export function CTABand({
   title = "Ready to skip the line?",
   subtitle = "Walk in or call ahead. Either way, your paperwork is moving in minutes.",
 }: CTABandProps) {
+  const pathname = usePathname();
+  const isContactPage =
+    pathname === "/contact" || pathname.startsWith("/contact/");
+  const isBookPage = pathname === "/book" || pathname.startsWith("/book/");
+
   return (
     <section className="relative py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -40,7 +55,7 @@ export function CTABand({
               </p>
             </div>
 
-            <div className="fade-up-on-view fade-up-on-view-1 lg:col-span-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
+            <div className="fade-up-on-view fade-up-on-view-1 lg:col-span-5 flex flex-row flex-nowrap items-center gap-2 sm:gap-3 lg:justify-end">
               <ButtonLink
                 href={PHONE_HREF}
                 variant="plate"
@@ -48,27 +63,35 @@ export function CTABand({
                 className="btn-plate-outline--dark"
               >
                 <Phone className="h-4 w-4" />
-                Call {PHONE_DISPLAY}
+                Call Us
               </ButtonLink>
-              {/* <ButtonLink
-                href={`https://maps.google.com/?q=${encodeURIComponent(`${ADDRESS_LINE_1} ${ADDRESS_LINE_2}`)}`}
-                target="_blank"
-                rel="noreferrer"
-                variant="ghost"
-                size="lg"
-                className="text-bg ring-1 ring-inset ring-white/40 hover:bg-white/10 hover:text-bg"
-              >
-                <MapPin className="h-4 w-4" />
-                Get directions
-              </ButtonLink> */}
               <ButtonLink
-                href="/contact"
+                href={CONTACT_MESSAGE_HREF}
                 variant="ghost"
                 size="lg"
                 className="text-bg ring-1 ring-inset ring-white/40 hover:bg-white/10 hover:text-bg"
+                onClick={(e) => {
+                  if (!isContactPage) return;
+                  e.preventDefault();
+                  scrollToAnchor(CONTACT_MESSAGE_FORM_ID);
+                }}
               >
                 <Mail className="h-4 w-4" />
                 Message us
+              </ButtonLink>
+              <ButtonLink
+                href={BOOKING_HREF}
+                variant="ghost"
+                size="lg"
+                className="text-bg ring-1 ring-inset ring-white/40 hover:bg-white/10 hover:text-bg"
+                onClick={(e) => {
+                  if (!isBookPage) return;
+                  e.preventDefault();
+                  scrollToAnchor(BOOKING_SECTION_ID);
+                }}
+              >
+                <Calendar className="h-4 w-4" />
+                Book an appointment
               </ButtonLink>
             </div>
           </div>

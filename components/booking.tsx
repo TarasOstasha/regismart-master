@@ -81,8 +81,8 @@ export function Booking() {
 
       {/* Scheduler */}
       <section
-        id="book"
-        className="relative bg-bg pb-20 pt-14 sm:pb-28 sm:pt-16"
+        id="booking"
+        className="scroll-mt-24 relative bg-bg pb-20 pt-14 sm:pb-28 sm:pt-16"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <InView className="mx-auto max-w-2xl text-center">

@@ -11,7 +11,9 @@ import {
   CheckCircle2,
   Navigation,
   ChevronRight,
+  ShieldCheck,
 } from "lucide-react";
+import { ComplianceCheckLinks } from "@/components/compliance-check-links";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import { WaveDivider } from "@/components/ui/wave-divider";
@@ -207,6 +209,23 @@ export function Contact() {
                   </ul>
                 </div>
               </div>
+
+              <div
+                id="compliance"
+                className="flex gap-4 rounded-2xl bg-bg p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft"
+              >
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 text-sm text-ink/85">
+                  <p className="text-xs uppercase tracking-wider text-muted">
+                    CT DMV compliance
+                  </p>
+                  <div className="mt-2">
+                    <ComplianceCheckLinks />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* right: form */}
@@ -227,7 +246,10 @@ export function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                    <h3 className="font-display text-xl font-semibold text-ink">
+                    <h3
+                      id="message-form"
+                      className="scroll-mt-24 font-display text-xl font-semibold text-ink"
+                    >
                       Send a quick message
                     </h3>
                     <div className="grid gap-5 sm:grid-cols-2">

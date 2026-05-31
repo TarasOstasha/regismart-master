@@ -84,7 +84,7 @@ export function LicensePlate({
   tilt = false,
   children,
 }: LicensePlateProps) {
-  // Detect touch/coarse-pointer devices — on those we skip framer-motion
+  // Detect touch/coarse-pointer devices - on those we skip framer-motion
   // entirely (no mouse to tilt with, and spring physics waste CPU/battery).
   const [isTouch, setIsTouch] = useState(false);
   useEffect(() => {

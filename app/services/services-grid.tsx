@@ -37,9 +37,13 @@ export function ServicesGrid({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {showIntro && (
           <InView className="max-w-2xl">
-            <p className="fade-up-on-view text-sm font-semibold uppercase tracking-[0.18em] text-plate-blue">
-              What we handle
+            <p
+              className="fade-up-on-view text-sm font-semibold uppercase tracking-[0.18em]"
+              style={{ color: "#3b5ca8" }}
+            >
+              -
             </p>
+       
             <h2 className="fade-up-on-view fade-up-on-view-1 mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink">
               One office. Every CT registration service.
             </h2>

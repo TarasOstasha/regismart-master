@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { scrollToAnchor } from "@/lib/scroll-to-anchor";
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -10,7 +11,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Skip Lenis on touch devices — iOS/Android native momentum scrolling is
+    // Skip Lenis on touch devices - iOS/Android native momentum scrolling is
     // already smooth, and Lenis's smoothWheel can't fire without wheel events.
     // Hydrating it on mobile just costs bundle parse + a perpetual RAF loop
     // that competes with React hydration on the main thread.
@@ -69,8 +70,14 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
   // Snap to top on route change. Without this, Lenis catches the implicit
   // scroll-to-top from the App Router transition and animates it over
-  // ~1.1s — which makes every navigation feel sluggish.
+  // ~1.1s - which makes every navigation feel sluggish.
   useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const id = window.setTimeout(() => scrollToAnchor(hash), 50);
+      return () => window.clearTimeout(id);
+    }
+
     const lenis = lenisRef.current;
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });

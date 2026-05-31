@@ -14,7 +14,7 @@ type Props = {
   /** use the site plate gradient (#4a9bd5 → #f0f4f8) as a static SVG gradient */
   gradient?: boolean;
   /**
-   * Match the fixed page plate gradient at this wave's bottom edge —
+   * Match the fixed page plate gradient at this wave's bottom edge -
    * stays in sync with the section below while scrolling.
    */
   syncViewportFill?: boolean;

@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { ServicesGrid } from "@/components/services-grid";
+import { services } from "@/data/services";
 import { HowItWorks } from "@/components/how-it-works";
 import { CTABand } from "@/components/cta-band";
 import { WaveDivider } from "@/components/ui/wave-divider";
@@ -9,7 +10,8 @@ export default function ServicesPage() {
     <>
       <PageHeader
         eyebrow="What we handle"
-        title="Every CT registration service, under one roof."
+        eyebrowClassName="text-[#3b5ca8]"
+        title="One office. Every CT registration service, under one roof."
         subtitle="Quick sticker renewals, fleet titles, and everything in between. If you've got a vehicle, we've probably registered one like it."
       />
       <div className="absolute inset-x-0 -top-px translate-y-[-99%] leading-none text-surface opacity-90">
@@ -20,7 +22,7 @@ export default function ServicesPage() {
           className="-mt-[2px] h-12 rotate-180 sm:h-16"
         />
       </div>
-      <ServicesGrid showIntro={false} />
+      <ServicesGrid showIntro={false} limit={services.length} />
       <HowItWorks />
       <CTABand />
     </>
