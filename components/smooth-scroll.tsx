@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { scrollToAnchor } from "@/lib/scroll-to-anchor";
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -71,6 +72,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
   // scroll-to-top from the App Router transition and animates it over
   // ~1.1s - which makes every navigation feel sluggish.
   useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const id = window.setTimeout(() => scrollToAnchor(hash), 50);
+      return () => window.clearTimeout(id);
+    }
+
     const lenis = lenisRef.current;
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });

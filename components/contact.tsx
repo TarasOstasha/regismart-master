@@ -226,7 +226,10 @@ export function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
-                    <h3 className="font-display text-xl font-semibold text-ink">
+                    <h3
+                      id="message-form"
+                      className="scroll-mt-24 font-display text-xl font-semibold text-ink"
+                    >
                       Send a quick message
                     </h3>
                     <div className="grid gap-5 sm:grid-cols-2">
