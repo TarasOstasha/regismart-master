@@ -120,14 +120,17 @@ export function Header() {
         </div>
       </div>
 
-      {/* mobile menu */}
+      {/* mobile menu — grid-rows 0fr↔1fr animates to the content's natural
+          height (no max-height overshoot/dead-period) and is compositor-light,
+          so it stays smooth on mobile. */}
       <div
         className={cn(
-          "lg:hidden overflow-y-auto border-b border-plate-sky/40 bg-plate-white/90 backdrop-blur-md transition-[max-height] duration-300",
-          open ? "max-h-[calc(100dvh-4rem)]" : "max-h-0 overflow-hidden",
+          "lg:hidden grid transition-[grid-template-rows] duration-300 ease-out",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
       >
-        <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 sm:px-6">
+        <div className="overflow-hidden border-b border-plate-sky/40 bg-plate-white">
+          <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 sm:px-6">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -144,6 +147,7 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          </div>
         </div>
       </div>
     </header>
