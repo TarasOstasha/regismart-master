@@ -6,13 +6,15 @@ import { CTABand } from "@/components/cta-band";
 import { getGoogleReviews } from "@/lib/google-reviews";
 
 export default async function HomePage() {
-  const { rating, total } = await getGoogleReviews();
+  const { rating, total, reviews, url } = await getGoogleReviews();
 
   return (
     <>
       <Hero googleReviewTotal={total} />
       <Stats googleRating={rating} googleReviewTotal={total} />
-      <ReviewsCarousel />
+      {/* Reuse the server-fetched reviews so the carousel doesn't re-fetch
+          /api/google-reviews on the client (removes a round-trip + skeleton). */}
+      <ReviewsCarousel initialReviews={reviews} initialGoogleUrl={url} />
       <ServicesGrid limit={6} showAllLink />
       <CTABand />
     </>
