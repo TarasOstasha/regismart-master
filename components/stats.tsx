@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Clock, Star, CalendarDays, Users } from "lucide-react";
 import { InView } from "@/components/ui/in-view";
 
@@ -44,24 +44,28 @@ function Counter({
   duration?: number;
   active: boolean;
 }) {
-  const [val, setVal] = useState(0);
+  // Animate by writing to the DOM node directly (not setState) so the count-up
+  // doesn't trigger a React re-render every frame — that re-render storm was
+  // blocking the main thread (and menu taps) for ~1.4s right after load.
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!active) return;
-    setVal(0);
+    const node = ref.current;
+    if (!node) return;
     const start = performance.now();
     let raf = 0;
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / (duration * 1000));
       const eased = 1 - Math.pow(1 - p, 3);
-      setVal(eased * to);
+      node.textContent = (eased * to).toFixed(decimals);
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [active, to, duration]);
+  }, [active, to, duration, decimals]);
 
-  return <>{val.toFixed(decimals)}</>;
+  return <span ref={ref}>{(0).toFixed(decimals)}</span>;
 }
 
 type StatsProps = {

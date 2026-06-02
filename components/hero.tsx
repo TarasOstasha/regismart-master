@@ -1,26 +1,19 @@
-﻿"use client";
-
-import Image from "next/image";
-import { usePathname } from "next/navigation";
+﻿import Image from "next/image";
 import { Phone, ArrowRight, Star, Check, Clock } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
-import { WaveDivider } from "@/components/ui/wave-divider";
 import { formatReviewCount } from "@/lib/google-reviews";
-import {
-  BOOKING_HREF,
-  BOOKING_SECTION_ID,
-  scrollToAnchor,
-} from "@/lib/scroll-to-anchor";
+import { BOOKING_HREF } from "@/lib/scroll-to-anchor";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
 type HeroProps = {
   googleReviewTotal?: number | null;
 };
 
+// Server component (no client hooks) so it stays out of the hydration path —
+// the page becomes interactive sooner on mobile. Hero only renders on the home
+// route, so the previous /book scroll-to-anchor onClick was dead code here.
 export function Hero({ googleReviewTotal = null }: HeroProps) {
-  const pathname = usePathname();
-  const isBookPage = pathname === "/book" || pathname.startsWith("/book/");
   const reviewCount =
     googleReviewTotal != null ? formatReviewCount(googleReviewTotal) : null;
 
@@ -64,16 +57,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
               See what to bring
               <ArrowRight className="h-4 w-4" />
             </ButtonLink>
-            <ButtonLink
-              href={BOOKING_HREF}
-              variant="secondary"
-              size="lg"
-              onClick={(e) => {
-                if (!isBookPage) return;
-                e.preventDefault();
-                scrollToAnchor(BOOKING_SECTION_ID);
-              }}
-            >
+            <ButtonLink href={BOOKING_HREF} variant="secondary" size="lg">
               Book Online
               <ArrowRight className="h-4 w-4" />
             </ButtonLink>
