@@ -182,7 +182,7 @@ export function ReviewsCarousel({
             onClick={() =>
               setPage((p) => (p - 1 + positions) % positions)
             }
-            className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
+            className="grid h-9 w-9 place-items-center rounded-full bg-white ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -207,7 +207,7 @@ export function ReviewsCarousel({
             type="button"
             aria-label="Next review"
             onClick={() => setPage((p) => (p + 1) % positions)}
-            className="grid h-9 w-9 place-items-center rounded-full bg-bg ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
+            className="grid h-9 w-9 place-items-center rounded-full bg-white ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
             <ChevronRight className="h-4 w-4" />
           </button>

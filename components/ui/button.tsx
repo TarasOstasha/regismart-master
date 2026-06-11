@@ -17,11 +17,11 @@ const variants: Record<Variant, string> = {
   primary:
     "bg-ink text-bg hover:bg-plate-navy shadow-soft hover:shadow-[0_18px_40px_-18px_rgba(31,48,124,0.6)]",
   secondary:
-    "bg-bg text-ink ring-1 ring-inset ring-plate-sky/70 hover:ring-plate-blue hover:bg-surface",
+    "bg-white text-ink shadow-soft hover:shadow-[0_16px_32px_-14px_rgba(31,48,124,0.4)]",
   ghost: "text-ink/80 hover:text-ink hover:bg-surface",
   gradient:
     "text-bg bg-plate-gradient-h shadow-soft hover:shadow-[0_18px_40px_-18px_rgba(31,48,124,0.7)] hover:brightness-[1.05]",
-  plate: "btn-plate-outline bg-bg text-ink",
+  plate: "btn-plate-outline bg-white text-ink",
 };
 
 const sizes: Record<Size, string> = {

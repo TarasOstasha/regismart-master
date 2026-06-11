@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, Menu, X, ChevronDown } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { cn, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
@@ -17,19 +17,29 @@ const navItems = [
   { href: "/contact", label: "Contact" },
 ];
 
-const LOGO_WHITE = "/images/dmv-express-regismart-logo-white.svg";
+// Quick links under the Services nav item. Anchors exist on /services
+// (#how = HowItWorks section, #docs = document checklists).
+const servicesMenu = [
+  { href: "/services", label: "All services" },
+  { href: "/services#how", label: "How it works" },
+  { href: "/services#docs", label: "What to bring" },
+];
+
+// The blue logo works on both header states now that the hero photo is gone —
+// the unscrolled backdrop is the light plate gradient, the scrolled one is the
+// white blur bar. (Logo assets themselves unchanged.)
 const LOGO_BLUE = "/images/dmv_express_blue_logo-blue.svg";
 
-function Wordmark({ scrolled }: { scrolled: boolean }) {
+function Wordmark() {
   return (
     <Link href="/" className="group flex shrink-0 items-center focus-ring rounded-lg">
       <Image
-        src={scrolled ? LOGO_BLUE : LOGO_WHITE}
+        src={LOGO_BLUE}
         alt="DMV Express RegiSmart LLC"
         width={280}
         height={72}
         priority
-        className="h-12 w-auto object-contain transition-opacity duration-300 sm:h-14"
+        className="h-12 w-auto object-contain sm:h-14"
       />
     </Link>
   );
@@ -79,24 +89,59 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Wordmark scrolled={scrolled} />
+        <Wordmark />
 
         <nav className="hidden lg:flex items-center gap-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isActive(item.href) ? "page" : undefined}
-              className={cn(
-                "rounded-full px-4 py-2 text-[15px] font-medium transition-colors focus-ring",
-                isActive(item.href)
-                  ? "bg-surface font-semibold text-ink"
-                  : "text-ink/85 hover:text-ink hover:bg-surface",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const linkClass = cn(
+              "rounded-full px-4 py-2 text-[15px] font-medium transition-colors focus-ring",
+              isActive(item.href)
+                ? "bg-white font-semibold text-ink shadow-[0_1px_4px_rgba(31,48,124,0.16)] ring-1 ring-inset ring-plate-sky/40"
+                : "text-ink/85 hover:bg-white/70 hover:text-ink",
+            );
+            if (item.href !== "/services") {
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={linkClass}
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+            // Services gets a CSS-only hover/focus dropdown — no extra state,
+            // nothing added to the hydration path.
+            return (
+              <div key={item.href} className="group relative">
+                <Link
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={cn(linkClass, "inline-flex items-center gap-1")}
+                >
+                  {item.label}
+                  <ChevronDown
+                    className="h-3.5 w-3.5 opacity-70 transition-transform duration-200 group-hover:rotate-180"
+                    aria-hidden="true"
+                  />
+                </Link>
+                <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <div className="w-56 rounded-2xl bg-white p-1.5 shadow-[0_18px_40px_-18px_rgba(31,48,124,0.4)] ring-1 ring-inset ring-plate-sky/40">
+                    {servicesMenu.map((l) => (
+                      <Link
+                        key={l.href}
+                        href={l.href}
+                        className="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-ink/85 transition-colors hover:bg-surface hover:text-ink"
+                      >
+                        {l.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">

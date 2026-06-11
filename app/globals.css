@@ -37,43 +37,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-.hero {
-  position: relative;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-bg-image {
-  opacity: 1;
-  filter: saturate(0.88);
-  transform: scale(1.02);
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--plate-gradient);
-  opacity: 0.76;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-lead {
-  color: rgba(31, 48, 124, 0.84);
-  text-shadow: 0 1px 16px rgba(240, 245, 252, 0.75);
-}
-
 @layer utilities {
   .gradient-divider {
     height: 1px;
