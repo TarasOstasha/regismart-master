@@ -49,6 +49,14 @@ export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  // Close the Services dropdown whenever a navigation lands. The header
+  // survives client-side route changes, so without this the panel stays
+  // open after selecting an item (the clicked link also keeps focus).
+  useEffect(() => {
+    setServicesOpen(false);
+  }, [pathname]);
 
   const isActive = (href: string) =>
     href === "/"
@@ -114,27 +122,53 @@ export function Header() {
                 </Link>
               );
             }
-            // Services gets a CSS-only hover/focus dropdown — no extra state,
-            // nothing added to the hydration path.
+            // Services dropdown: state-driven open/close (hover via
+            // mouseenter/leave, keyboard via focus-within classes). Items
+            // close + blur on click so the panel can't stay stuck open
+            // across a client-side navigation.
             return (
-              <div key={item.href} className="group relative">
+              <div
+                key={item.href}
+                className="group relative"
+                onMouseEnter={() => setServicesOpen(true)}
+                onMouseLeave={() => setServicesOpen(false)}
+              >
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
+                  aria-expanded={servicesOpen}
+                  aria-haspopup="menu"
+                  onClick={(e) => {
+                    setServicesOpen(false);
+                    e.currentTarget.blur();
+                  }}
                   className={cn(linkClass, "inline-flex items-center gap-1")}
                 >
                   {item.label}
                   <ChevronDown
-                    className="h-3.5 w-3.5 opacity-70 transition-transform duration-200 group-hover:rotate-180"
+                    className={cn(
+                      "h-3.5 w-3.5 opacity-70 transition-transform duration-200",
+                      servicesOpen && "rotate-180",
+                    )}
                     aria-hidden="true"
                   />
                 </Link>
-                <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div
+                  className={cn(
+                    "absolute left-1/2 top-full -translate-x-1/2 pt-2 transition-all duration-150",
+                    "group-focus-within:visible group-focus-within:opacity-100",
+                    servicesOpen ? "visible opacity-100" : "invisible opacity-0",
+                  )}
+                >
                   <div className="w-56 rounded-2xl bg-white p-1.5 shadow-[0_18px_40px_-18px_rgba(31,48,124,0.4)] ring-1 ring-inset ring-plate-sky/40">
                     {servicesMenu.map((l) => (
                       <Link
                         key={l.href}
                         href={l.href}
+                        onClick={(e) => {
+                          setServicesOpen(false);
+                          e.currentTarget.blur();
+                        }}
                         className="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-ink/85 transition-colors hover:bg-surface hover:text-ink"
                       >
                         {l.label}
