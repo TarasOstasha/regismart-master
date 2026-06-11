@@ -82,7 +82,9 @@ export function Header() {
     <header
       id="top"
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        // pt clears the plate-frame bezel (inset 6px/10px + border) so the
+        // nav pills sit inside the plate instead of crossing its top edge.
+        "fixed inset-x-0 top-0 z-50 pt-2 sm:pt-4 transition-all duration-300",
         scrolled
           ? "border-b border-plate-sky/40 bg-plate-white/75 backdrop-blur-md"
           : "border-b border-transparent bg-transparent",
