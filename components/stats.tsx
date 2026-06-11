@@ -88,7 +88,9 @@ export function Stats({
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <InView
-          className="overflow-hidden rounded-3xl bg-white shadow-soft ring-1 ring-inset ring-plate-sky/30"
+          // Translucent white over the page gradient — reads as the mockup's
+          // soft gray panel rather than a stark white card.
+          className="overflow-hidden rounded-3xl bg-white/55 shadow-soft ring-1 ring-inset ring-plate-sky/30"
           onInView={() => setInView(true)}
         >
           <div className="grid grid-cols-2 sm:grid-cols-4">

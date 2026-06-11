@@ -15,24 +15,25 @@
   --plate-sky: 157 200 230;
   --plate-white: 240 244 248;
 
-  /* Matches the client mockup: blue holds through the header band, eases
-     across the middle, and the bottom ~20% of the viewport is flat
-     plate-white so below-the-fold content sits on white. */
+  /* Page backdrop, matched to the client mockup: medium sky blue holding
+     through the nav/headline zone, easing faster below it, near-white cool
+     gray at the bottom. (Component accents — CTAs, badges, plate chips —
+     keep the stronger #4A9BD5 brand gradient.) */
   --plate-gradient: linear-gradient(
     180deg,
-    #4a9bd5 0%,
-    #4a9bd5 8%,
-    #f0f4f8 80%,
-    #f0f4f8 100%
+    #7fb2e5 0%,
+    #a8c9ec 35%,
+    #d4e2f2 65%,
+    #f0f2f5 100%
   );
-  --plate-gradient-from: #4a9bd5;
-  --plate-gradient-to: #f0f4f8;
+  --plate-gradient-from: #7fb2e5;
+  --plate-gradient-to: #f0f2f5;
 }
 
 html,
 body {
   min-height: 100%;
-  background-color: #f0f4f8;
+  background-color: #f0f2f5;
   background-image: var(--plate-gradient);
   background-attachment: fixed;
   background-size: 100% 100%;
