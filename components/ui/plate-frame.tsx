@@ -24,7 +24,7 @@ export function PlateFrame() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-2 z-[80] rounded-[18px] border-[5px] border-[#24368a] shadow-[0_0_0_1px_rgba(255,255,255,0.85),0_0_0_4px_#bfc7d4,0_0_0_5px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)] sm:inset-2.5 sm:rounded-[28px] sm:border-[7px] sm:shadow-[0_0_0_1px_rgba(255,255,255,0.9),0_0_0_5px_#bfc7d4,0_0_0_6px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)]"
+      className="pointer-events-none fixed inset-2 z-[80] rounded-[18px] border-[7px] border-[#24368a] shadow-[0_0_0_1px_rgba(255,255,255,0.85),0_0_0_4px_#bfc7d4,0_0_0_5px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)] sm:inset-2.5 sm:rounded-[28px] sm:border-[9px] sm:shadow-[0_0_0_1px_rgba(255,255,255,0.9),0_0_0_5px_#bfc7d4,0_0_0_6px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)]"
     >
       <span className={`${HOLE} left-[26.5%] top-4 -translate-x-1/2`} />
       <span className={`${HOLE} right-[26.5%] top-4 translate-x-1/2`} />
