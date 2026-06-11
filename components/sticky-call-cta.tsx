@@ -17,7 +17,8 @@ export function StickyCallCTA() {
   return (
     <div
       className={cn(
-        "fixed inset-x-3 bottom-3 z-40 lg:hidden transition-all duration-300",
+        // bottom-4 keeps the bar clear of the plate frame's thicker bezel
+        "fixed inset-x-3 bottom-4 z-40 lg:hidden transition-all duration-300",
         show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",
       )}
     >
