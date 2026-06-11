@@ -15,7 +15,16 @@
   --plate-sky: 157 200 230;
   --plate-white: 240 244 248;
 
-  --plate-gradient: linear-gradient(180deg, #4a9bd5 0%, #f0f4f8 100%);
+  /* Matches the client mockup: blue holds through the header band, eases
+     across the middle, and the bottom ~20% of the viewport is flat
+     plate-white so below-the-fold content sits on white. */
+  --plate-gradient: linear-gradient(
+    180deg,
+    #4a9bd5 0%,
+    #4a9bd5 8%,
+    #f0f4f8 80%,
+    #f0f4f8 100%
+  );
   --plate-gradient-from: #4a9bd5;
   --plate-gradient-to: #f0f4f8;
 }
