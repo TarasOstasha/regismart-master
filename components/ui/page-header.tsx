@@ -56,7 +56,9 @@ export function PageHeader({
             <p
               className={cn(
                 "fade-up fade-up-1 mt-6 text-sm font-semibold uppercase tracking-[0.18em]",
-                eyebrowClassName ?? "text-plate-blue",
+                // Darker than text-plate-blue: the eyebrow sits on the blue
+                // top of the page gradient now that hero photos are gone.
+                eyebrowClassName ?? "text-[#3b5ca8]",
               )}
             >
               {eyebrow}

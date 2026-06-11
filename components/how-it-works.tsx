@@ -5,7 +5,6 @@ import {
   CT_DMV_COMPLIANCE_CHECK,
 } from "@/components/compliance-check-links";
 import { InView } from "@/components/ui/in-view";
-import { WaveDivider } from "@/components/ui/wave-divider";
 
 const steps = [
   {
@@ -100,20 +99,6 @@ function CalloutChecklistItem({
 export function HowItWorks() {
   return (
     <section id="how" className="relative pt-12 pb-20 sm:pt-16 sm:pb-28">
-      {/* <div className="absolute inset-x-0 -top-px translate-y-[-99%] text-surface">
-        <WaveDivider fill="currentColor" />
-      </div>
-      <div className="absolute inset-x-0 -bottom-px translate-y-[99%] rotate-180 text-surface">
-        <WaveDivider fill="currentColor" />
-      </div> */}
-            <div className="absolute inset-x-0 translate-y-[-99%] leading-none text-surface opacity-90">
-        <WaveDivider fill="currentColor" className="h-12 sm:h-16" />
-
-        <WaveDivider
-          fill="currentColor"
-          className="-mt-[1px] h-12 rotate-180 sm:h-16"
-        />
-      </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <InView className="mx-auto max-w-2xl text-center">
           <p className="fade-up-on-view text-sm font-semibold uppercase tracking-[0.18em] text-plate-blue">
@@ -155,7 +140,7 @@ export function HowItWorks() {
 
         {/* Document checklists */}
         <InView id="docs" className="mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div className="fade-up-on-view rounded-2xl bg-bg p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
+          <div className="fade-up-on-view rounded-2xl bg-white p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-plate-blue">
               For a CT car
             </p>
@@ -169,7 +154,7 @@ export function HowItWorks() {
             </ul>
           </div>
 
-          <div className="fade-up-on-view fade-up-on-view-1 rounded-2xl bg-bg p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
+          <div className="fade-up-on-view fade-up-on-view-1 rounded-2xl bg-white p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-plate-blue">
               For a motorcycle
             </p>
@@ -183,7 +168,7 @@ export function HowItWorks() {
             </ul>
           </div>
 
-          <div className="fade-up-on-view fade-up-on-view-2 rounded-2xl bg-bg p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft md:col-span-2 lg:col-span-1">
+          <div className="fade-up-on-view fade-up-on-view-2 rounded-2xl bg-white p-6 sm:p-8 ring-1 ring-inset ring-plate-sky/40 shadow-soft md:col-span-2 lg:col-span-1">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-plate-blue">
               For a boat or vessel
             </p>

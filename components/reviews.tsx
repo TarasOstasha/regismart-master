@@ -42,7 +42,7 @@ export async function Reviews() {
                 : "Neighbors trust us with their plates."}
             </h2>
           </div>
-          <div className="fade-up-on-view fade-up-on-view-2 inline-flex items-center gap-3 rounded-2xl bg-bg px-5 py-3 shadow-soft ring-1 ring-inset ring-plate-sky/50">
+          <div className="fade-up-on-view fade-up-on-view-2 inline-flex items-center gap-3 rounded-2xl bg-white px-5 py-3 shadow-soft ring-1 ring-inset ring-plate-sky/50">
             <Stars n={Math.round(rating ?? 5)} />
             <div>
               <p className="text-2xl font-bold leading-none text-ink">{displayRating}</p>

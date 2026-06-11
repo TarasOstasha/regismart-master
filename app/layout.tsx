@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { StickyCallCTA } from "@/components/sticky-call-cta";
+import { PlateFrame } from "@/components/ui/plate-frame";
 import { SITE_URL, SITE_NAME, OG_IMAGE, localBusinessSchema } from "@/lib/seo";
 
 export const viewport: Viewport = {
@@ -77,6 +78,7 @@ export default function RootLayout({
           <Footer />
         </SmoothScroll>
         <StickyCallCTA />
+        <PlateFrame />
         <script
           dangerouslySetInnerHTML={{
             __html:

@@ -15,15 +15,27 @@
   --plate-sky: 157 200 230;
   --plate-white: 240 244 248;
 
-  --plate-gradient: linear-gradient(180deg, #4a9bd5 0%, #f0f4f8 100%);
-  --plate-gradient-from: #4a9bd5;
-  --plate-gradient-to: #f0f4f8;
+  /* Page backdrop, matched to the client mockup: medium sky blue holding
+     through the nav/headline zone, easing faster below it, near-white cool
+     gray at the bottom. (Component accents — CTAs, badges, plate chips —
+     keep the stronger #4A9BD5 brand gradient.) */
+  --plate-gradient: linear-gradient(
+    180deg,
+    #5e9fda 0%,
+    #5e9fda 8%,
+    #7fb2e5 20%,
+    #a8c9ec 42%,
+    #d4e2f2 68%,
+    #f0f2f5 100%
+  );
+  --plate-gradient-from: #5e9fda;
+  --plate-gradient-to: #f0f2f5;
 }
 
 html,
 body {
   min-height: 100%;
-  background-color: #f0f4f8;
+  background-color: #f0f2f5;
   background-image: var(--plate-gradient);
   background-attachment: fixed;
   background-size: 100% 100%;
@@ -35,43 +47,6 @@ body {
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-.hero {
-  position: relative;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-bg-image {
-  opacity: 1;
-  filter: saturate(0.88);
-  transform: scale(1.02);
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--plate-gradient);
-  opacity: 0.76;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-lead {
-  color: rgba(31, 48, 124, 0.84);
-  text-shadow: 0 1px 16px rgba(240, 245, 252, 0.75);
 }
 
 @layer utilities {
