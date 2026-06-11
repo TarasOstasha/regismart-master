@@ -14,9 +14,10 @@
 // so they never collide with the nav row.
 // (Alternative far-side variant lives in commit 5d4853e if ever needed.)
 const HOLE =
-  "absolute hidden h-[26px] w-[60px] rounded-full bg-white ring-2 ring-inset ring-plate-navy/40 shadow-[inset_0_2px_4px_rgba(31,48,124,0.25)] lg:block";
+  "absolute h-[26px] w-[60px] rounded-full bg-white ring-2 ring-inset ring-plate-navy/40 shadow-[inset_0_2px_4px_rgba(31,48,124,0.25)]";
 
 export function PlateFrame() {
+  // Desktop-only (lg+) — phones get the normal edge-to-edge page.
   // The silver "metal frame" is drawn with concentric box-shadow rings just
   // outside the navy bezel (a background would cover the page; shadow rings
   // follow the border-radius and stay outside the content):
@@ -24,7 +25,7 @@ export function PlateFrame() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-2 z-[80] rounded-[18px] border-[7px] border-[#24368a] shadow-[0_0_0_1px_rgba(255,255,255,0.85),0_0_0_4px_#bfc7d4,0_0_0_5px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)] sm:inset-2.5 sm:rounded-[28px] sm:border-[9px] sm:shadow-[0_0_0_1px_rgba(255,255,255,0.9),0_0_0_5px_#bfc7d4,0_0_0_6px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)]"
+      className="pointer-events-none fixed inset-2.5 z-[80] hidden lg:block rounded-[28px] border-[9px] border-[#24368a] shadow-[0_0_0_1px_rgba(255,255,255,0.9),0_0_0_5px_#bfc7d4,0_0_0_6px_#8a93a5,0_0_0_9999px_#e9eef5,inset_0_0_0_1px_rgba(255,255,255,0.5)]"
     >
       <span className={`${HOLE} left-[26.5%] top-4 -translate-x-1/2`} />
       <span className={`${HOLE} right-[26.5%] top-4 translate-x-1/2`} />
