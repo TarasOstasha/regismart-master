@@ -10,7 +10,7 @@
  * header content and the sticky call CTA.
  */
 // Mockup-style holes: white stadium shape with a navy rim, ~27% in from each
-// side like a real plate. The header reserves the band they occupy (lg:pt-12)
+// side like a real plate. The header reserves the band they occupy (lg:pt-16)
 // so they never collide with the nav row.
 // (Alternative far-side variant lives in commit 5d4853e if ever needed.)
 const HOLE =

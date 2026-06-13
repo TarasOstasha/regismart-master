@@ -35,7 +35,7 @@ export function PageHeader({
   const currentLabel = segment ? titleCaseFromSegment(segment) : title;
 
   return (
-    <section className="relative overflow-hidden pt-24 pb-10 sm:pt-28 sm:pb-14">
+    <section className="relative overflow-hidden pt-24 pb-10 sm:pt-28 sm:pb-14 lg:pt-32">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl">
           <nav

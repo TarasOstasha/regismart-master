@@ -72,14 +72,14 @@ const DEV_SAMPLE: ReviewsPayload = {
   rating: 5,
   total: 78,
   url: "https://maps.google.com/?cid=2537399472312333786",
-  reviews: [
-    { name: "Alex C.", initials: "AC", rating: 5, body: "Walked in, walked out registered in 20 minutes. Saved me from a multi-week DMV wait.", meta: "8 months ago" },
-    { name: "Maria P.", initials: "MP", rating: 5, body: "Friendly staff, fair pricing, handled my out-of-state transfer without a single hiccup.", meta: "5 months ago" },
-    { name: "Devon R.", initials: "DR", rating: 5, body: "Best registration experience I've ever had. Will absolutely recommend to everyone.", meta: "3 months ago" },
-    { name: "Sasha K.", initials: "SK", rating: 5, body: "Saturday hours, no appointment, in and out fast. These folks know what they're doing.", meta: "2 months ago" },
-    { name: "Jordan T.", initials: "JT", rating: 5, body: "Renewed my plate sticker in 10 minutes flat. Worth every penny of the service fee.", meta: "6 weeks ago" },
-    { name: "Priya M.", initials: "PM", rating: 5, body: "Walked me through everything for my used car purchase. Couldn't ask for better service.", meta: "1 month ago" },
-  ],
+  // reviews: [
+  //   { name: "Alex C.", initials: "AC", rating: 5, body: "Walked in, walked out registered in 20 minutes. Saved me from a multi-week DMV wait.", meta: "8 months ago" },
+  //   { name: "Maria P.", initials: "MP", rating: 5, body: "Friendly staff, fair pricing, handled my out-of-state transfer without a single hiccup.", meta: "5 months ago" },
+  //   { name: "Devon R.", initials: "DR", rating: 5, body: "Best registration experience I've ever had. Will absolutely recommend to everyone.", meta: "3 months ago" },
+  //   { name: "Sasha K.", initials: "SK", rating: 5, body: "Saturday hours, no appointment, in and out fast. These folks know what they're doing.", meta: "2 months ago" },
+  //   { name: "Jordan T.", initials: "JT", rating: 5, body: "Renewed my plate sticker in 10 minutes flat. Worth every penny of the service fee.", meta: "6 weeks ago" },
+  //   { name: "Priya M.", initials: "PM", rating: 5, body: "Walked me through everything for my used car purchase. Couldn't ask for better service.", meta: "1 month ago" },
+  // ],
 };
 
 function withDevFallback(p: ReviewsPayload): ReviewsPayload {

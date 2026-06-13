@@ -4,7 +4,15 @@ import {
   ComplianceCheckLinks,
   CT_DMV_COMPLIANCE_CHECK,
 } from "@/components/compliance-check-links";
+import { FormDownloadLink } from "@/components/form-download-link";
 import { InView } from "@/components/ui/in-view";
+import {
+  dmvForms,
+  dmvFormById,
+  FORM_BILL_OF_SALE,
+  FORM_H13B,
+  type FormDocItem,
+} from "@/data/forms";
 
 const steps = [
   {
@@ -27,12 +35,12 @@ const steps = [
   },
 ];
 
-type DocItem = string | typeof CT_DMV_COMPLIANCE_CHECK;
+type DocItem = string | FormDocItem | typeof CT_DMV_COMPLIANCE_CHECK;
 
 const carDocs: DocItem[] = [
-  "Bill of sale",
+  FORM_BILL_OF_SALE,
   "Title (if vehicle is 20 years old or newer)",
-  "Form H-13B (Application for Registration / Title)",
+  FORM_H13B,
   "CT Driver's License or ID",
   "CT Insurance card",
   "Emissions or VIN check (if required)",
@@ -61,7 +69,9 @@ const boatDocs: DocItem[] = [
 ];
 
 function docKey(item: DocItem) {
-  return typeof item === "string" ? item : item.label;
+  if (typeof item === "string") return item;
+  if ("kind" in item && item.kind === "form") return item.label;
+  return item.label;
 }
 
 function DocChecklistItem({ item }: { item: DocItem }) {
@@ -74,6 +84,8 @@ function DocChecklistItem({ item }: { item: DocItem }) {
       </span>
       {typeof item === "string" ? (
         <span>{label}</span>
+      ) : "kind" in item && item.kind === "form" ? (
+        <FormDownloadLink form={dmvFormById[item.formId]} label={item.label} />
       ) : (
         <ComplianceCheckLinks />
       )}
@@ -180,6 +192,26 @@ export function HowItWorks() {
                 <DocChecklistItem key={docKey(d)} item={d} />
               ))}
             </ul>
+          </div>
+        </InView>
+
+        <InView id="forms" className="mt-10">
+          <div className="fade-up-on-view mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-plate-blue">
+              Download &amp; print
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-semibold text-ink sm:text-3xl">
+              CT DMV forms
+            </h3>
+            <p className="mt-3 text-sm text-muted leading-relaxed">
+              Fill these out before your visit and we&apos;ll move even faster at
+              the counter.
+            </p>
+          </div>
+          <div className="fade-up-on-view fade-up-on-view-1 mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {dmvForms.map((form) => (
+              <FormDownloadLink key={form.id} form={form} variant="card" />
+            ))}
           </div>
         </InView>
 

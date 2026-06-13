@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
 import { cn, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
 const navItems = [
@@ -23,6 +22,7 @@ const servicesMenu = [
   { href: "/services", label: "All services" },
   { href: "/services#how", label: "How it works" },
   { href: "/services#docs", label: "What to bring" },
+  { href: "/services#forms", label: "Download forms" },
 ];
 
 // The blue logo works on both header states now that the hero photo is gone —
@@ -91,15 +91,14 @@ export function Header() {
       id="top"
       className={cn(
         // lg+ clears the plate-frame bezel and reserves the mounting-hole
-        // band above the nav row (mockup: holes at ~27% width, between bezel
-        // and nav). Below lg there is no frame, so no offset.
-        "fixed inset-x-0 top-0 z-50 lg:pt-12 transition-all duration-300",
+        // band above the nav row (holes sit at top-4; lg:pt-16 + lg:h-14).
+        "fixed inset-x-0 top-0 z-50 lg:pt-16 transition-all duration-300",
         scrolled
           ? "border-b border-plate-sky/40 bg-plate-white/75 backdrop-blur-md"
           : "border-b border-transparent bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-14 lg:px-8">
         <Wordmark />
 
         <nav className="hidden lg:flex items-center gap-2">
@@ -182,15 +181,24 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ButtonLink
+          <a
             href={PHONE_HREF}
-            variant="plate"
-            size="md"
-            className="hidden sm:inline-flex"
+            className="hidden sm:inline-flex items-center gap-3 rounded-full bg-white py-1.5 pl-1.5 pr-4 text-ink shadow-soft transition-shadow hover:shadow-[0_16px_32px_-14px_rgba(31,48,124,0.22)] focus-ring"
           >
-            <Phone className="h-4 w-4" />
-            {PHONE_DISPLAY}
-          </ButtonLink>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-plate-white px-2.5 py-1.5">
+              <Phone
+                className="h-3.5 w-3.5 -rotate-12 fill-current text-ink"
+                strokeWidth={0}
+                aria-hidden="true"
+              />
+              <span className="font-mono text-[10px] font-semibold tracking-[0.14em] text-ink">
+                CT
+              </span>
+            </span>
+            <span className="text-[15px] font-semibold text-ink">
+              {PHONE_DISPLAY}
+            </span>
+          </a>
 
           <button
             onClick={() => setOpen(!open)}
