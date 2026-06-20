@@ -40,9 +40,9 @@ export function Footer() {
               <Image
                 src="/images/regismart-logo.svg"
                 alt="DMV Express by RegiSmart LLC"
-                width={271}
-                height={72}
-                className="h-12 w-auto object-contain"
+                width={693}
+                height={107}
+                className="h-9 w-auto object-contain"
               />
             </Link>
             <p className="mt-4 max-w-md text-sm text-muted leading-relaxed">

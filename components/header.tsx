@@ -36,10 +36,10 @@ function Wordmark() {
       <Image
         src={LOGO}
         alt="DMV Express RegiSmart LLC"
-        width={271}
-        height={72}
+        width={693}
+        height={107}
         priority
-        className="h-12 w-auto object-contain sm:h-14"
+        className="h-7 w-auto object-contain sm:h-8"
       />
     </Link>
   );
