@@ -53,7 +53,7 @@ export const localBusinessSchema = {
   legalName: "RegiSmart LLC",
   url: SITE_URL,
   image: `${SITE_URL}${OG_IMAGE}`,
-  logo: `${SITE_URL}/images/dmv-express-regismart-logo.svg`,
+  logo: `${SITE_URL}/images/regismart-logo.png`,
   telephone: "+1-203-460-7061",
   address: {
     "@type": "PostalAddress",

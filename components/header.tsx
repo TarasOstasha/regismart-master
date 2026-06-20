@@ -25,18 +25,18 @@ const servicesMenu = [
   { href: "/services#forms", label: "Download forms" },
 ];
 
-// The blue logo works on both header states now that the hero photo is gone —
-// the unscrolled backdrop is the light plate gradient, the scrolled one is the
-// white blur bar. (Logo assets themselves unchanged.)
-const LOGO_BLUE = "/images/dmv_express_blue_logo-blue.svg";
+// RegiSmart wordmark (CT silhouette + "Regismart LLC"). Works on both header
+// states: the unscrolled backdrop is the light plate gradient, the scrolled
+// one is the white blur bar.
+const LOGO = "/images/regismart-logo.svg";
 
 function Wordmark() {
   return (
     <Link href="/" className="group flex shrink-0 items-center focus-ring rounded-lg">
       <Image
-        src={LOGO_BLUE}
+        src={LOGO}
         alt="DMV Express RegiSmart LLC"
-        width={280}
+        width={271}
         height={72}
         priority
         className="h-12 w-auto object-contain sm:h-14"

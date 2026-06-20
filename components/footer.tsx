@@ -38,9 +38,9 @@ export function Footer() {
               className="inline-flex items-center focus-ring rounded-lg"
             >
               <Image
-                src="/images/dmv_express_blue_logo-blue.svg"
+                src="/images/regismart-logo.svg"
                 alt="DMV Express by RegiSmart LLC"
-                width={280}
+                width={271}
                 height={72}
                 className="h-12 w-auto object-contain"
               />
