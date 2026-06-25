@@ -1,6 +1,21 @@
 "use server";
 
+import { headers } from "next/headers";
 import { Resend } from "resend";
+import { rateLimit } from "@/lib/rate-limit";
+
+// Per-IP submission ceiling: 5 messages per minute. Generous for a human
+// (submit + a couple retries), restrictive for a flood/cost-abuse script.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 60_000;
+
+async function clientIp(): Promise<string> {
+  const h = await headers();
+  // x-forwarded-for is "client, proxy1, proxy2…" — the first hop is the client.
+  const fwd = h.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  return h.get("x-real-ip") ?? "unknown";
+}
 
 // Sender. While the regismart(s).com domain isn't verified in Resend yet,
 // this uses Resend's onboarding sender (works without DNS setup). Once a
@@ -40,6 +55,15 @@ export async function sendContact(input: ContactInput): Promise<ContactResult> {
   // Silent honeypot drop - return ok so the bot thinks it worked.
   if (input.website && input.website.trim() !== "") {
     return { ok: true };
+  }
+
+  // Per-IP rate limit (after the honeypot so caught bots don't consume quota).
+  const rl = rateLimit(`contact:${await clientIp()}`, RATE_LIMIT, RATE_WINDOW_MS);
+  if (!rl.ok) {
+    return {
+      ok: false,
+      error: `Too many messages. Please wait ${rl.retryAfter}s and try again, or call us.`,
+    };
   }
 
   const name = (input.name ?? "").trim();

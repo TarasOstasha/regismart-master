@@ -19,7 +19,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
 
   return (
     <section className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
         <InView className="max-w-5xl">
           <h1 className="fade-up-on-view fade-up-on-view-2 font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-plate-navy leading-[1.05]">
             Skip the DMV.
