@@ -9,7 +9,7 @@ type HeroProps = {
   googleReviewTotal?: number | null;
 };
 
-// Server component (no client hooks) so it stays out of the hydration path —
+// Server component (no client hooks) so it stays out of the hydration path -
 // the page becomes interactive sooner on mobile. The backdrop is the site-wide
 // fixed plate gradient; the photo layer was dropped in the license-plate
 // redesign, which also makes the H1 the LCP element (faster first paint).

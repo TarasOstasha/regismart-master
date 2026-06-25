@@ -2,7 +2,7 @@ export type DmvForm = {
   id: string;
   title: string;
   description: string;
-  /** Path under /public — served at this URL */
+  /** Path under /public - served at this URL */
   href: string;
   /** Suggested filename when the user saves the PDF */
   downloadName: string;

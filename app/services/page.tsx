@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Services",
   description:
-    "Every CT vehicle registration service in one place — renewals, titles, out-of-state transfers, and dealer/commercial (IRP). Walk-ins welcome in Brookfield, CT.",
+    "Every CT vehicle registration service in one place - renewals, titles, out-of-state transfers, and dealer/commercial (IRP). Walk-ins welcome in Brookfield, CT.",
   path: "/services",
 });
 

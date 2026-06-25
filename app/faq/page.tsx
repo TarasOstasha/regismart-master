@@ -7,7 +7,7 @@ import { faqPageSchema, pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "FAQ",
   description:
-    "Answers to common CT vehicle registration questions — documents to bring, out-of-state transfers, dealer and fleet services, payments, and DMV compliance.",
+    "Answers to common CT vehicle registration questions - documents to bring, out-of-state transfers, dealer and fleet services, payments, and DMV compliance.",
   path: "/faq",
 });
 

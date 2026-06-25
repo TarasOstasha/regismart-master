@@ -120,7 +120,7 @@ export function ReviewsCarousel({
 
   // Sliding window: one "position" per review. Each next/prev shifts the
   // window by ONE card (not a full page), so visitors see a steady drip of
-  // new cards — feels like there's more behind every click.
+  // new cards - feels like there's more behind every click.
   const positions = items.length > perPage ? items.length : 1;
 
   useEffect(() => {

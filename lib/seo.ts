@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { FaqItem } from "@/data/faq";
 
 // Single source of truth for the production origin. Swap here if the domain
-// changes — metadataBase, canonicals, sitemap, robots, and JSON-LD all read it.
+// changes - metadataBase, canonicals, sitemap, robots, and JSON-LD all read it.
 export const SITE_URL = "https://www.regismarts.com";
 export const SITE_NAME = "DMV Express by RegiSmart LLC";
 

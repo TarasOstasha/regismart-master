@@ -46,7 +46,7 @@ function Counter({
   active: boolean;
 }) {
   // Animate by writing to the DOM node directly (not setState) so the count-up
-  // doesn't trigger a React re-render every frame — that re-render storm was
+  // doesn't trigger a React re-render every frame - that re-render storm was
   // blocking the main thread (and menu taps) for ~1.4s right after load.
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -88,7 +88,7 @@ export function Stats({
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <InView
-          // Translucent white over the page gradient — reads as the mockup's
+          // Translucent white over the page gradient - reads as the mockup's
           // soft gray panel rather than a stark white card.
           className="overflow-hidden rounded-3xl bg-white/55 shadow-soft ring-1 ring-inset ring-plate-sky/30"
           onInView={() => setInView(true)}

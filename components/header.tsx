@@ -72,7 +72,7 @@ export function Header() {
 
   // Lock background scroll while the mobile menu is open. The viewport scrolls
   // at the <html> level (Lenis is off on touch), so body overflow alone doesn't
-  // hold it — lock documentElement too, and restore prior inline values.
+  // hold it - lock documentElement too, and restore prior inline values.
   useEffect(() => {
     if (!open) return;
     const html = document.documentElement;
@@ -210,7 +210,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* mobile menu — grid-rows 0fr↔1fr animates to the content's natural
+      {/* mobile menu - grid-rows 0fr↔1fr animates to the content's natural
           height (no max-height overshoot/dead-period) and is compositor-light,
           so it stays smooth on mobile. */}
       <div

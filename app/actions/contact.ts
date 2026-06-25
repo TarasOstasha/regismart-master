@@ -37,7 +37,7 @@ function esc(s: string) {
 }
 
 export async function sendContact(input: ContactInput): Promise<ContactResult> {
-  // Silent honeypot drop — return ok so the bot thinks it worked.
+  // Silent honeypot drop - return ok so the bot thinks it worked.
   if (input.website && input.website.trim() !== "") {
     return { ok: true };
   }
@@ -65,7 +65,7 @@ export async function sendContact(input: ContactInput): Promise<ContactResult> {
     console.error("[contact] RESEND_API_KEY missing");
     return {
       ok: false,
-      error: "Email is temporarily unavailable — please call us instead.",
+      error: "Email is temporarily unavailable - please call us instead.",
     };
   }
 

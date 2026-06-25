@@ -17,7 +17,7 @@
 
   /* Page backdrop, matched to the client mockup: medium sky blue holding
      through the nav/headline zone, easing faster below it, near-white cool
-     gray at the bottom. (Component accents — CTAs, badges, plate chips —
+     gray at the bottom. (Component accents - CTAs, badges, plate chips -
      keep the stronger #4A9BD5 brand gradient.) */
   --plate-gradient: linear-gradient(
     180deg,
