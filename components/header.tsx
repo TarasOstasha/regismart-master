@@ -4,7 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Phone, Menu, X, ChevronDown } from "lucide-react";
+import {
+  Phone,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
+import { ButtonLink } from "@/components/ui/button";
+import { BOOKING_HREF } from "@/lib/scroll-to-anchor";
 import { cn, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
 
 const navItems = [
@@ -50,12 +58,16 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
-  // Close the Services dropdown whenever a navigation lands. The header
-  // survives client-side route changes, so without this the panel stays
-  // open after selecting an item (the clicked link also keeps focus).
+  const closeMenu = () => setOpen(false);
+
+  // Close menus whenever a navigation lands. The header survives client-side
+  // route changes, so without this panels stay open after selecting an item.
   useEffect(() => {
+    setOpen(false);
     setServicesOpen(false);
+    setMobileServicesOpen(false);
   }, [pathname]);
 
   const isActive = (href: string) =>
@@ -93,9 +105,9 @@ export function Header() {
         // lg+ clears the plate-frame bezel and reserves the mounting-hole
         // band above the nav row (holes sit at top-4; lg:pt-16 + lg:h-14).
         "fixed inset-x-0 top-0 z-50 lg:pt-16 transition-all duration-300",
-        scrolled
+        scrolled || open
           ? "border-b border-plate-sky/40 bg-plate-white/75 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
+          : "bg-transparent",
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-14 lg:px-8">
@@ -202,41 +214,162 @@ export function Header() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden -mr-2 grid h-11 w-11 place-items-center rounded-full text-ink hover:bg-surface focus-ring"
-            aria-label="Toggle menu"
+            className={cn(
+              "lg:hidden -mr-2 grid h-11 w-11 place-items-center rounded-full text-ink focus-ring transition-colors",
+              open
+                ? "bg-plate-navy text-white"
+                : "hover:bg-surface",
+            )}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* mobile menu - grid-rows 0fr↔1fr animates to the content's natural
-          height (no max-height overshoot/dead-period) and is compositor-light,
-          so it stays smooth on mobile. */}
+      {/* Mobile menu — expands below the header bar */}
       <div
+        id="mobile-nav"
         className={cn(
           "lg:hidden grid transition-[grid-template-rows] duration-300 ease-out",
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
+        aria-hidden={!open}
       >
-        <div className="overflow-hidden border-b border-plate-sky/40 bg-plate-white">
-          <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 sm:px-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              aria-current={isActive(item.href) ? "page" : undefined}
-              className={cn(
-                "rounded-lg px-3 py-3 text-base focus-ring",
-                isActive(item.href)
-                  ? "bg-surface font-semibold text-ink"
-                  : "text-ink hover:bg-surface",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div
+          className={cn(
+            "overflow-hidden bg-plate-white/95 backdrop-blur-md",
+            open && "border-b border-plate-sky/40",
+          )}
+        >
+          <div className="mx-auto flex max-w-7xl flex-col px-4 sm:px-6">
+            <nav className="py-3" aria-label="Mobile">
+              <ul className="space-y-1">
+                {navItems.map((item) => {
+                  if (item.href !== "/services") {
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          onClick={closeMenu}
+                          aria-current={
+                            isActive(item.href) ? "page" : undefined
+                          }
+                          className={cn(
+                            "flex items-center justify-between rounded-xl px-4 py-3.5 text-[17px] font-medium transition-colors focus-ring",
+                            isActive(item.href)
+                              ? "bg-surface font-semibold text-plate-navy"
+                              : "text-ink/90 active:bg-surface/70",
+                          )}
+                        >
+                          {item.label}
+                          <ChevronRight
+                            className={cn(
+                              "h-4 w-4 shrink-0",
+                              isActive(item.href)
+                                ? "text-plate-blue"
+                                : "text-ink/30",
+                            )}
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      </li>
+                    );
+                  }
+
+                  return (
+                    <li key={item.href}>
+                      <button
+                        type="button"
+                        onClick={() => setMobileServicesOpen((v) => !v)}
+                        aria-expanded={mobileServicesOpen}
+                        className={cn(
+                          "flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-[17px] font-medium transition-colors focus-ring",
+                          isActive(item.href)
+                            ? "bg-surface font-semibold text-plate-navy"
+                            : "text-ink/90 active:bg-surface/70",
+                        )}
+                      >
+                        {item.label}
+                        <ChevronDown
+                          className={cn(
+                            "h-4 w-4 shrink-0 transition-transform duration-200",
+                            mobileServicesOpen
+                              ? "rotate-180 text-plate-blue"
+                              : "text-ink/30",
+                          )}
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <div
+                        className={cn(
+                          "grid transition-[grid-template-rows] duration-200 ease-out",
+                          mobileServicesOpen
+                            ? "grid-rows-[1fr]"
+                            : "grid-rows-[0fr]",
+                        )}
+                      >
+                        <ul className="overflow-hidden">
+                          {servicesMenu.map((l) => (
+                            <li key={l.href}>
+                              <Link
+                                href={l.href}
+                                onClick={closeMenu}
+                                className="ml-4 flex items-center gap-2 border-l-2 border-plate-sky/60 py-2.5 pl-4 pr-2 text-[15px] font-medium text-ink/80 transition-colors hover:text-plate-navy focus-ring rounded-r-lg"
+                              >
+                                {l.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            <div className="space-y-2.5 border-t border-plate-sky/30 py-4">
+              <a
+                href={PHONE_HREF}
+                onClick={closeMenu}
+                className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-full bg-white pl-2 pr-6 text-base text-ink shadow-soft transition-shadow hover:shadow-[0_16px_32px_-14px_rgba(31,48,124,0.22)] focus-ring"
+              >
+                <span className="inline-flex h-9 items-center gap-1.5 rounded-full bg-plate-white px-2.5">
+                  <Phone
+                    className="h-3.5 w-3.5 -rotate-12 fill-current text-ink"
+                    strokeWidth={0}
+                    aria-hidden="true"
+                  />
+                  <span className="font-mono text-[10px] font-semibold tracking-[0.14em] text-ink">
+                    CT
+                  </span>
+                </span>
+                <span className="font-semibold text-ink">Call Us</span>
+              </a>
+              <ButtonLink
+                href="/services#how"
+                variant="secondary"
+                size="lg"
+                className="w-full"
+                onClick={closeMenu}
+              >
+                See what to bring
+                <ChevronRight className="h-4 w-4" />
+              </ButtonLink>
+              <ButtonLink
+                href={BOOKING_HREF}
+                variant="gradient"
+                size="lg"
+                className="w-full"
+                onClick={closeMenu}
+              >
+                Book Online
+                <ChevronRight className="h-4 w-4" />
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </div>
