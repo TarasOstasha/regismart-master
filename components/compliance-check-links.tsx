@@ -16,12 +16,14 @@ type ComplianceCheckLinksProps = {
 export function ComplianceCheckLinks({ variant = "light" }: ComplianceCheckLinksProps) {
   const isDark = variant === "dark";
   const mainLinkClass = isDark
-    ? "transition hover:underline underline-offset-2 focus-ring rounded-sm"
-    : "transition hover:text-plate-blue hover:underline underline-offset-2 focus-ring rounded-sm";
+    ? "inline-flex min-h-12 items-center transition hover:underline underline-offset-2 focus-ring rounded-sm"
+    : "inline-flex min-h-12 items-center transition hover:text-plate-blue hover:underline underline-offset-2 focus-ring rounded-sm";
   const helperTextClass = isDark
     ? "mt-1 text-xs text-bg/75 leading-relaxed"
     : "mt-1 text-xs text-muted leading-relaxed";
-  const helperLinkClass = mainLinkClass;
+  const helperLinkClass = isDark
+    ? "inline-flex min-h-12 items-center transition hover:underline underline-offset-2 focus-ring rounded-sm"
+    : "inline-flex min-h-12 items-center transition hover:text-plate-blue hover:underline underline-offset-2 focus-ring rounded-sm";
 
   return (
     <div className="min-w-0">

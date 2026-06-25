@@ -26,17 +26,17 @@ export function StickyCallCTA() {
           href={PHONE_HREF}
           className="flex flex-1 items-center justify-center gap-2 rounded-full bg-plate-gradient-h px-4 py-3 text-sm font-semibold text-bg"
         >
-          <Phone className="h-4 w-4" />
+          <Phone className="h-4 w-4" aria-hidden="true" />
           Call {PHONE_DISPLAY}
         </a>
         <a
           href={DIRECTIONS_URL}
           target="_blank"
           rel="noreferrer"
-          className="grid h-11 w-11 place-items-center rounded-full bg-bg/10 text-bg"
+          className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-bg/10 text-bg focus-ring"
           aria-label="Get directions"
         >
-          <MapPin className="h-4 w-4" />
+          <MapPin className="h-4 w-4" aria-hidden="true" />
         </a>
       </div>
     </div>

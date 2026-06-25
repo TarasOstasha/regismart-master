@@ -78,7 +78,7 @@ export function Contact() {
                 className="group flex gap-4 rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft transition-all hover:ring-plate-blue/60 focus-ring"
               >
                 <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                  <MapPin className="h-5 w-5" />
+                  <MapPin className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 break-words">
                   <p className="text-xs uppercase tracking-wider text-muted">
@@ -99,7 +99,7 @@ export function Contact() {
                 className="group flex gap-4 rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft transition-all hover:ring-plate-blue/60 focus-ring"
               >
                 <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                  <Phone className="h-5 w-5" />
+                  <Phone className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-wider text-muted">
@@ -119,7 +119,7 @@ export function Contact() {
                 className="group flex gap-4 rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft transition-all hover:ring-plate-blue/60 focus-ring"
               >
                 <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                  <Mail className="h-5 w-5" />
+                  <Mail className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 break-words">
                   <p className="text-xs uppercase tracking-wider text-muted">
@@ -131,7 +131,7 @@ export function Contact() {
 
               <div className="flex gap-4 rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
                 <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                  <Clock className="h-5 w-5" />
+                  <Clock className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted">
@@ -156,7 +156,7 @@ export function Contact() {
                 className="flex gap-4 rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft"
               >
                 <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                  <ShieldCheck className="h-5 w-5" />
+                  <ShieldCheck className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 text-sm text-ink/85">
                   <p className="text-xs uppercase tracking-wider text-muted">
@@ -216,11 +216,12 @@ export function Contact() {
                       placeholder="Tell us about the vehicle, the timeline, or what's tripping you up..."
                     />
                     {/* Honeypot: real users won't fill this; bots will. */}
-                    <div aria-hidden="true" className="hidden">
-                      <label>
+                    <div className="hidden">
+                      <label htmlFor="website-honeypot">
                         Website
                         <input
                           type="text"
+                          id="website-honeypot"
                           name="website"
                           tabIndex={-1}
                           autoComplete="off"

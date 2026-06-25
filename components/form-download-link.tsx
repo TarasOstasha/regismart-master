@@ -40,7 +40,7 @@ export function FormDownloadLink({
     <a
       href={form.href}
       download={form.downloadName}
-      className="inline-flex items-center gap-1.5 transition hover:text-plate-blue hover:underline underline-offset-2 focus-ring rounded-sm"
+      className="inline-flex min-h-12 items-center gap-1.5 transition hover:text-plate-blue hover:underline underline-offset-2 focus-ring rounded-sm"
     >
       {label ?? form.title}
       <Download className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden="true" />

@@ -35,7 +35,7 @@ export function Footer() {
           <div className="lg:col-span-5">
             <Link
               href="/"
-              className="inline-flex items-center focus-ring rounded-lg"
+              className="inline-flex min-h-12 items-center focus-ring rounded-lg"
             >
               <Image
                 src="/images/regismart-logo.svg"
@@ -53,7 +53,7 @@ export function Footer() {
               <p>{ADDRESS_LINE_1}</p>
               <p>{ADDRESS_LINE_2}</p>
               <p>
-                <a href={PHONE_HREF} className="hover:text-accent">
+                <a href={PHONE_HREF} className="inline-flex min-h-12 items-center hover:text-accent focus-ring rounded-sm">
                   {PHONE_DISPLAY}
                 </a>
               </p>
@@ -71,7 +71,7 @@ export function Footer() {
                     <li key={l.href}>
                       <Link
                         href={l.href}
-                        className="text-sm text-ink/75 hover:text-ink"
+                        className="inline-flex min-h-12 items-center py-1 text-sm text-ink/75 hover:text-ink focus-ring rounded-sm"
                       >
                         {l.label}
                       </Link>
@@ -89,9 +89,9 @@ export function Footer() {
             <div className="mt-4 flex flex-col gap-3 text-sm">
               <a
                 href="https://facebook.com"
-                className="inline-flex items-center gap-2 text-ink/80 hover:text-ink"
+                className="inline-flex min-h-12 items-center gap-2 text-ink/80 hover:text-ink focus-ring rounded-sm"
               >
-                <Facebook className="h-4 w-4" />
+                <Facebook className="h-4 w-4" aria-hidden="true" />
                 Facebook
               </a>
             </div>

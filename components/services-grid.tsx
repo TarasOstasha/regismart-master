@@ -60,7 +60,7 @@ export function ServicesGrid({
             >
               <Card className="group h-full p-6">
                 <div className="grid h-12 w-12 place-items-center rounded-xl bg-plate-soft ring-1 ring-inset ring-plate-sky/50 text-plate-navy transition-colors group-hover:bg-plate-gradient-h group-hover:text-bg group-hover:ring-transparent">
-                  <Icon className="h-6 w-6" strokeWidth={1.75} />
+                  <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
                 </div>
                 <h3 className="mt-5 font-display text-lg font-semibold text-ink">
                   {title}
@@ -77,10 +77,10 @@ export function ServicesGrid({
           <div className="mt-10 flex justify-center">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:gap-3 transition-all focus-ring rounded-full px-3 py-1"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold text-accent transition-all hover:gap-3 focus-ring"
             >
               See all {services.length} services
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         )}

@@ -5,7 +5,7 @@ import { formatReviewCount, getGoogleReviews } from "@/lib/google-reviews";
 
 function Stars({ n }: { n: number }) {
   return (
-    <div className="flex gap-0.5 text-plate-blue">
+    <div className="flex gap-0.5 text-plate-blue" aria-hidden="true">
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
@@ -52,7 +52,7 @@ export async function Reviews() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="transition hover:text-plate-blue"
+                    className="inline-flex min-h-12 items-center transition hover:text-plate-blue focus-ring rounded-sm"
                   >
                     Google rating · {reviewLabel}
                   </a>

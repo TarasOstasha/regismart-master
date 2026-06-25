@@ -44,11 +44,11 @@ export function PageHeader({
           >
             <Link
               href="/"
-              className="hover:text-ink transition-colors focus-ring rounded"
+              className="inline-flex min-h-12 items-center hover:text-ink transition-colors focus-ring rounded"
             >
               Home
             </Link>
-            <ChevronRight className="h-3.5 w-3.5 text-muted/60" />
+            <ChevronRight className="h-3.5 w-3.5 text-muted/60" aria-hidden="true" />
             <span className="text-ink/80">{currentLabel}</span>
           </nav>
 

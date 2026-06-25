@@ -86,7 +86,7 @@ export function CTABand({
                   scrollToAnchor(CONTACT_MESSAGE_FORM_ID);
                 }}
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="h-4 w-4" aria-hidden="true" />
                 Message us
               </ButtonLink>
               <ButtonLink
@@ -100,7 +100,7 @@ export function CTABand({
                   scrollToAnchor(BOOKING_SECTION_ID);
                 }}
               >
-                <Calendar className="h-4 w-4" />
+                <Calendar className="h-4 w-4" aria-hidden="true" />
                 Book an appointment
               </ButtonLink>
             </div>

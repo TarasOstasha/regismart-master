@@ -80,7 +80,7 @@ function DocChecklistItem({ item }: { item: DocItem }) {
   return (
     <li className="flex items-start gap-3 text-sm text-ink/85">
       <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-plate-gradient-h text-bg">
-        <Check className="h-3 w-3" />
+        <Check className="h-3 w-3" aria-hidden="true" />
       </span>
       {typeof item === "string" ? (
         <span>{label}</span>
@@ -101,7 +101,7 @@ function CalloutChecklistItem({
   return (
     <li className="flex items-start gap-3 text-bg/95">
       <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-bg/15">
-        <Check className="h-3.5 w-3.5" />
+        <Check className="h-3.5 w-3.5" aria-hidden="true" />
       </span>
       {children}
     </li>
@@ -134,7 +134,7 @@ export function HowItWorks() {
             >
               <div className="relative grid h-20 w-20 place-items-center">
                 <span className="absolute inset-0 rounded-full bg-plate-gradient opacity-90 shadow-soft" />
-                <Icon className="relative h-9 w-9 text-bg" strokeWidth={1.75} />
+                <Icon className="relative h-9 w-9 text-bg" strokeWidth={1.75} aria-hidden="true" />
               </div>
               <span className="mt-4 font-mono text-xs font-semibold tracking-[0.2em] text-plate-blue">
                 STEP {n}

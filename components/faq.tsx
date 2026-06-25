@@ -54,9 +54,11 @@ export function FAQ() {
                 >
                   <button
                     type="button"
+                    id={`faq-button-${i}`}
                     onClick={() => setOpen(isOpen ? null : i)}
                     className="group flex w-full items-center justify-between gap-6 py-6 text-left focus-ring"
                     aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${i}`}
                   >
                     <span className="font-display text-lg font-semibold text-ink sm:text-xl">
                       {item.q}
@@ -70,15 +72,18 @@ export function FAQ() {
                       )}
                     >
                       {isOpen ? (
-                        <Minus className="h-4 w-4" strokeWidth={2.5} />
+                        <Minus className="h-4 w-4" strokeWidth={2.5} aria-hidden="true" />
                       ) : (
-                        <Plus className="h-4 w-4" strokeWidth={2.5} />
+                        <Plus className="h-4 w-4" strokeWidth={2.5} aria-hidden="true" />
                       )}
                     </span>
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        id={`faq-panel-${i}`}
+                        role="region"
+                        aria-labelledby={`faq-button-${i}`}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}

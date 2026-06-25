@@ -14,6 +14,7 @@ function Stars({ n }: { n: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
+          aria-hidden="true"
           className={i < n ? "h-4 w-4 fill-current" : "h-4 w-4 opacity-30"}
         />
       ))}
@@ -184,41 +185,49 @@ export function ReviewsCarousel({
       </div>
 
       {!loading && positions > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-4">
+        <div
+          className="mt-6 flex items-center justify-center gap-4"
+          role="group"
+          aria-label="Review carousel controls"
+        >
           <button
             type="button"
             aria-label="Previous review"
             onClick={() =>
               setPage((p) => (p - 1 + positions) % positions)
             }
-            className="grid h-9 w-9 place-items-center rounded-full bg-white ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
+            className="grid h-12 w-12 place-items-center rounded-full bg-white ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           </button>
-          <div className="flex items-center gap-2" role="tablist">
+          <div className="flex items-center gap-1" aria-label="Review pagination">
             {Array.from({ length: positions }).map((_, i) => (
               <button
                 key={i}
                 type="button"
-                role="tab"
-                aria-selected={i === page}
                 aria-label={`Show review ${i + 1}`}
+                aria-current={i === page ? "true" : undefined}
                 onClick={() => setPage(i)}
-                className={
-                  i === page
-                    ? "h-2 w-6 rounded-full bg-plate-navy transition-all"
-                    : "h-2 w-2 rounded-full bg-plate-sky/70 transition-all hover:bg-plate-blue/70"
-                }
-              />
+                className="grid h-12 w-12 place-items-center rounded-full focus-ring"
+              >
+                <span
+                  aria-hidden="true"
+                  className={
+                    i === page
+                      ? "h-2 w-6 rounded-full bg-plate-navy transition-all"
+                      : "h-2 w-2 rounded-full bg-plate-sky/70 transition-all hover:bg-plate-blue/70"
+                  }
+                />
+              </button>
             ))}
           </div>
           <button
             type="button"
             aria-label="Next review"
             onClick={() => setPage((p) => (p + 1) % positions)}
-            className="grid h-9 w-9 place-items-center rounded-full bg-white ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
+            className="grid h-12 w-12 place-items-center rounded-full bg-white ring-1 ring-inset ring-plate-sky/50 text-ink transition hover:ring-plate-blue/60 hover:shadow-soft"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       )}
@@ -250,7 +259,7 @@ export function ReviewsCarousel({
               href={googleUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="fade-up-on-view fade-up-on-view-2 text-xs font-medium uppercase tracking-[0.14em] text-muted transition hover:text-plate-blue"
+              className="fade-up-on-view fade-up-on-view-2 inline-flex min-h-12 items-center py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted transition hover:text-plate-blue focus-ring rounded-sm"
             >
               View on Google
             </a>

@@ -79,7 +79,7 @@ export function WhyRegiSmart() {
               >
                 <div className="shrink-0">
                   <div className="grid h-11 w-11 place-items-center rounded-xl bg-white ring-1 ring-inset ring-plate-sky/60 text-plate-navy shadow-soft">
-                    <Icon className="h-5 w-5" strokeWidth={1.75} />
+                    <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
                   </div>
                 </div>
                 <div>

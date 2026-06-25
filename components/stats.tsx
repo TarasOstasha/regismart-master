@@ -111,6 +111,7 @@ export function Stats({
                 <s.icon
                   className="mx-auto h-7 w-7 text-plate-navy"
                   strokeWidth={1.5}
+                  aria-hidden="true"
                 />
                 <p className="mt-4 font-display text-3xl sm:text-4xl font-bold tracking-tight text-ink tabular-nums">
                   {s.prefix}

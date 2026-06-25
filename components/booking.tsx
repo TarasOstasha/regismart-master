@@ -49,7 +49,7 @@ export function Booking() {
             <aside className="fade-up-on-view space-y-4 lg:col-span-4">
               <div className="rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
                 <Badge variant="plate" className="mb-4">
-                  <DoorOpen className="h-3.5 w-3.5" />
+                  <DoorOpen className="h-3.5 w-3.5" aria-hidden="true" />
                   Walk-ins welcome
                 </Badge>
                 <p className="text-sm text-muted leading-relaxed">
@@ -58,14 +58,14 @@ export function Booking() {
                   convenient appointment time,{" "}
                   <a
                     href="mailto:info@regismarts.com"
-                    className="text-primary hover:underline"
+                    className="inline-flex min-h-12 items-center text-primary hover:underline focus-ring rounded-sm"
                   >
                     <b>email us</b>
                   </a>{" "}
                   or{" "}
                   <a
                     href="tel:+12034607061"
-                    className="text-primary hover:underline"
+                    className="inline-flex min-h-12 items-center text-primary hover:underline focus-ring rounded-sm"
                   >
                     <b>call (203) 460-7061</b>
                   </a>
@@ -76,7 +76,7 @@ export function Booking() {
               <div className="rounded-2xl bg-white p-6 ring-1 ring-inset ring-plate-sky/40 shadow-soft">
                 <div className="flex gap-4">
                   <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                    <Clock className="h-5 w-5" />
+                    <Clock className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted">
@@ -100,7 +100,7 @@ export function Booking() {
               <div className="rounded-2xl bg-plate-soft p-6 ring-1 ring-inset ring-plate-sky/40">
                 <div className="flex gap-4">
                   <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-plate-gradient-h text-bg">
-                    <Phone className="h-5 w-5" />
+                    <Phone className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted">
@@ -116,7 +116,7 @@ export function Booking() {
                       size="sm"
                       className="mt-4"
                     >
-                      <Phone className="h-4 w-4" />
+                      <Phone className="h-4 w-4" aria-hidden="true" />
                       {PHONE_DISPLAY}
                     </ButtonLink>
                   </div>
@@ -129,7 +129,7 @@ export function Booking() {
                 <div className="flex flex-col gap-3 border-b border-plate-sky/30 bg-plate-gradient-h px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                   <div className="flex items-center gap-3 text-bg">
                     <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/15 ring-1 ring-inset ring-white/25">
-                      <Calendar className="h-5 w-5" />
+                      <Calendar className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <div>
                       <p className="font-display text-lg font-semibold">
@@ -144,10 +144,10 @@ export function Booking() {
                     href={SCHEDULE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 self-start rounded-full px-3 py-1.5 text-xs font-semibold text-bg ring-1 ring-inset ring-white/35 transition hover:bg-white/10 focus-ring sm:self-center"
+                    className="inline-flex min-h-12 items-center gap-2 self-start rounded-full px-4 py-2 text-xs font-semibold text-bg ring-1 ring-inset ring-white/35 transition hover:bg-white/10 focus-ring sm:self-center"
                   >
                     Open in new tab
-                    <ExternalLink className="h-3.5 w-3.5" />
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                   </a>
                 </div>
 

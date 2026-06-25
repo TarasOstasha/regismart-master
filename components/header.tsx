@@ -40,7 +40,7 @@ const LOGO = "/images/regismart-logo.svg";
 
 function Wordmark() {
   return (
-    <Link href="/" className="group flex shrink-0 items-center focus-ring rounded-lg">
+    <Link href="/" className="group flex shrink-0 items-center min-h-12 focus-ring rounded-lg">
       <Image
         src={LOGO}
         alt="DMV Express RegiSmart LLC"
@@ -147,8 +147,6 @@ export function Header() {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  aria-expanded={servicesOpen}
-                  aria-haspopup="menu"
                   onClick={(e) => {
                     setServicesOpen(false);
                     e.currentTarget.blur();
@@ -213,9 +211,10 @@ export function Header() {
           </a>
 
           <button
+            type="button"
             onClick={() => setOpen(!open)}
             className={cn(
-              "lg:hidden -mr-2 grid h-11 w-11 place-items-center rounded-full text-ink focus-ring transition-colors",
+              "lg:hidden -mr-2 grid h-12 w-12 place-items-center rounded-full text-ink focus-ring transition-colors",
               open
                 ? "bg-plate-navy text-white"
                 : "hover:bg-surface",
@@ -224,7 +223,11 @@ export function Header() {
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {open ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
@@ -236,7 +239,7 @@ export function Header() {
           "lg:hidden grid transition-[grid-template-rows] duration-300 ease-out",
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
-        aria-hidden={!open}
+        inert={!open}
       >
         <div
           className={cn(
@@ -285,6 +288,7 @@ export function Header() {
                         type="button"
                         onClick={() => setMobileServicesOpen((v) => !v)}
                         aria-expanded={mobileServicesOpen}
+                        aria-controls="mobile-services-submenu"
                         className={cn(
                           "flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-[17px] font-medium transition-colors focus-ring",
                           isActive(item.href)
@@ -304,6 +308,7 @@ export function Header() {
                         />
                       </button>
                       <div
+                        id="mobile-services-submenu"
                         className={cn(
                           "grid transition-[grid-template-rows] duration-200 ease-out",
                           mobileServicesOpen
@@ -357,7 +362,7 @@ export function Header() {
                 onClick={closeMenu}
               >
                 See what to bring
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
               <ButtonLink
                 href={BOOKING_HREF}
@@ -367,7 +372,7 @@ export function Header() {
                 onClick={closeMenu}
               >
                 Book Online
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
             </div>
           </div>

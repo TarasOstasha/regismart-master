@@ -20,7 +20,7 @@ export function FeesTeaser() {
             <div className="lg:col-span-5">
               <div className="fade-up-on-view">
                 <Badge variant="plate">
-                  <Receipt className="h-3.5 w-3.5" />
+                  <Receipt className="h-3.5 w-3.5" aria-hidden="true" />
                   Transparent pricing
                 </Badge>
               </div>
@@ -30,10 +30,10 @@ export function FeesTeaser() {
               </p>
               <Link
                 href="/contact"
-                className="fade-up-on-view fade-up-on-view-2 mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:gap-3 transition-all focus-ring rounded"
+                className="fade-up-on-view fade-up-on-view-2 mt-6 inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-accent hover:gap-3 transition-all focus-ring rounded"
               >
                 Ask about your specific service
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
 

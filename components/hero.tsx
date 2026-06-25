@@ -57,18 +57,18 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
             </a>
             <ButtonLink href="/services#how" variant="secondary" size="lg">
               See what to bring
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
             <ButtonLink href={BOOKING_HREF} variant="secondary" size="lg">
               Book Online
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>
 
           <ul className="fade-up-on-view fade-up-on-view-6 mt-10 grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:gap-6 text-sm">
             <li className="flex items-center gap-2 text-ink/80">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-plate-navy text-white">
-                <Star className="h-3.5 w-3.5 fill-current" />
+                <Star className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
               </span>
               <span>
                 <strong className="font-semibold text-ink">
@@ -79,13 +79,13 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
             </li>
             <li className="flex items-center gap-2 text-ink/80">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-plate-navy text-white">
-                <Check className="h-3.5 w-3.5" />
+                <Check className="h-3.5 w-3.5" aria-hidden="true" />
               </span>
               <span>Walk-ins welcome</span>
             </li>
             <li className="flex items-center gap-2 text-ink/80">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-plate-navy text-white">
-                <Clock className="h-3.5 w-3.5" />
+                <Clock className="h-3.5 w-3.5" aria-hidden="true" />
               </span>
               <span>Most visits under 30 min</span>
             </li>
