@@ -117,7 +117,7 @@ export function Footer() {
                 Instagram
               </a>
               <a
-                href="www.tiktok.com/@dmv.express.regis"
+                href="https://www.tiktok.com/@dmv.express.regis"
                 className="inline-flex min-h-12 items-center gap-2 text-ink/80 hover:text-ink focus-ring rounded-sm"
               >
                 <TikTokIcon className="h-4 w-4" />
