@@ -69,7 +69,7 @@ type ReviewsCarouselProps = {
   /** Render the section's eyebrow + heading row. Turn off when embedded
    *  inside a parent that already supplies its own heading. */
   showHeader?: boolean;
-  /** Visible cards per slide. 2 on the home teaser, 3 on /about. Advances one review at a time. */
+  /** Visible cards per slide on sm+ breakpoints. Always 1 on mobile. */
   perPage?: number;
 };
 
@@ -84,6 +84,7 @@ export function ReviewsCarousel({
   const [googleUrl, setGoogleUrl] = useState<string | null>(initialGoogleUrl);
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(1);
   const reducedMotionRef = useRef(false);
 
   useEffect(() => {
@@ -91,6 +92,14 @@ export function ReviewsCarousel({
       "(prefers-reduced-motion: reduce)",
     ).matches;
   }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    const update = () => setVisibleCount(mq.matches ? perPage : 1);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [perPage]);
 
   useEffect(() => {
     if (initialReviews) return;
@@ -121,7 +130,7 @@ export function ReviewsCarousel({
   // Sliding window: one "position" per review. Each next/prev shifts the
   // window by ONE card (not a full page), so visitors see a steady drip of
   // new cards - feels like there's more behind every click.
-  const positions = items.length > perPage ? items.length : 1;
+  const positions = items.length > visibleCount ? items.length : 1;
 
   useEffect(() => {
     if (positions <= 1 || paused || reducedMotionRef.current) return;
@@ -139,16 +148,16 @@ export function ReviewsCarousel({
 
   const current = (() => {
     if (items.length === 0) return [];
-    if (items.length <= perPage) return items;
+    if (items.length <= visibleCount) return items;
     const out: NormalizedReview[] = [];
-    for (let i = 0; i < perPage; i++) {
+    for (let i = 0; i < visibleCount; i++) {
       out.push(items[(page + i) % items.length]);
     }
     return out;
   })();
   const gridCols =
     perPage >= 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
-  const skeletonCount = Math.min(perPage, 3);
+  const skeletonCount = Math.min(visibleCount, 3);
 
   const pauseHandlers = {
     onMouseEnter: () => setPaused(true),

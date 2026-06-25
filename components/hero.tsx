@@ -18,8 +18,8 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
     googleReviewTotal != null ? formatReviewCount(googleReviewTotal) : null;
 
   return (
-    <section className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
-      <div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
+    <section className="relative isolate overflow-hidden pt-20 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 sm:pt-16 lg:px-8">
         <InView className="max-w-5xl">
           <h1 className="fade-up-on-view fade-up-on-view-2 font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-plate-navy leading-[1.05]">
             Skip the DMV.
@@ -52,7 +52,7 @@ export function Hero({ googleReviewTotal = null }: HeroProps) {
                 </span>
               </span>
               <span className="font-semibold text-ink">
-                {PHONE_DISPLAY}
+                Call Us
               </span>
             </a>
             <ButtonLink href="/services#how" variant="secondary" size="lg">
